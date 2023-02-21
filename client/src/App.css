@@ -1,0 +1,96 @@
+.App {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background-color: #1b1830;
+  color: white;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.auth-form-container{
+  display: flex;
+  flex-direction: column;
+  background-color: #C2BBDC;
+  padding: 10px;
+  max-height: 90vh;
+  font-family: 'Roboto Mono', monospace;
+}
+
+label {
+  text-align: left;
+  padding: 0.25 rem;
+  font-family: 'Roboto Mono', monospace;
+}
+
+input {
+  margin: 0.25rem 0;
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Roboto Mono', monospace;
+}
+button{
+  border: none;
+  cursor: pointer;
+  margin: 1px;
+  font-family: 'Roboto Mono', monospace;
+}
+.submit-button{
+  padding: 5px;
+  border-radius: 10px;
+  transition:  all 0.1s linear;
+  background-color: #DB7862;
+  font-family: 'Roboto Mono', monospace;
+}
+.submit-button:hover{
+  background-color: #FBB35D;
+  transform:  scale(1.1);
+}
+.link-button {
+  background: none;
+  color: black;
+  text-decoration: underline;
+  font-family: 'Roboto Mono', monospace;
+
+}
+#form-footer{
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.unchecked-radio-option, .checked-radio-option{
+  border-radius: 5px;
+  padding: 2px;
+  display: flex;
+  justify-content: center;
+  background-color: #A14E64;
+  margin: 1px;
+  cursor: pointer;
+  transition:  all 0.1s linear;
+  text-align: center
+}
+.unchecked-radio-option:hover, .checked-radio-option:hover{
+  background-color: #5B3153;
+  transform: scale(1.05)
+}
+.checked-radio-option{
+  background-color: #5B3153;
+}
+
+input[type="radio"]{
+  visibility:hidden;
+}
+.radio-question{
+  transition: all 0.3s ease-out;
+}
+.form-item{
+  display: flex;
+  flex-direction: column;
+}
