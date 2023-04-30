@@ -2,10 +2,11 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+  width: 100vw;
   align-items: center;
-  justify-content: center;
-  background-color: #1b1830;
+  justify-content: start;
+  background-color: #31334B;
   color: white;
   font-family: 'Roboto Mono', monospace;
 }
@@ -93,4 +94,45 @@ input[type="radio"]{
 .form-item{
   display: flex;
   flex-direction: column;
+}
+.navbar{
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  background-color: #1b1830;
+  justify-content: space-between;
+  align-items: center;
+  width:100%;
+  height: 10%;
+  margin-bottom:10px;
+}
+.navbar-links{
+  display: flex;
+  flex-direction: row;
+  width: 40%;
+  gap:3px;
+}
+
+.navbar-link{
+  margin: 10px;
+  background-color: #A14E64;
+  border-radius: 10px;
+  text-decoration: none;
+  font-family: 'Roboto Mono', monospace;
+  color:white;
+  text-align: center;
+  font-weight: bold;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+.navbar-logo{
+  transform: scale(0.7);
+}
+.visible{
+  visibility: visible;
+}
+.hidden{
+  visibility: hidden;
 }

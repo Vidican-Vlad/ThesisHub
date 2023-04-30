@@ -10,7 +10,10 @@ const fileSchema = new mongoose.Schema({
     extension:{
         type:String,
         required:true,
-        enum:[".jpg",".png",".pdf",".doc"]
+    },
+    fullPath:{
+        type:String,
+        required: true
     }
 });
 

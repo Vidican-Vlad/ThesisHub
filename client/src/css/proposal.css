@@ -1,0 +1,124 @@
+.create-proposal-page{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    background-color: #31334B;
+    color: white;
+    font-family: 'Roboto Mono', monospace;
+}
+.navbar{
+    width: 100%;
+    height: 10%;
+}   
+.create-proposal-page-main{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.checkbox-unchecked, .checkbox-checked{
+    background-color:#A14E64 ;
+    padding:10px;
+    cursor: pointer;
+    border-radius: 15px;
+    border: 1px solid black;
+}
+.checkbox-checked{
+    background-color:#5B3153 ;
+}
+.checkbox-unchecked:hover{
+    background-color: #5B3153;
+}
+.taglist{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding:10px;
+    gap: 10px;
+    width: 15%;
+    height: 95%;
+    border-radius: 10px;
+    background-color:#496372;
+}
+.create-proposal-form-wrapper{
+    display: flex;
+    height:95%;
+    flex-direction: column;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 10px;
+    flex:1;
+    background-color: #31334B;
+
+}
+.create-proposal-form{
+    background-color: #496372;
+    max-width: 70%;
+    min-width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 20px;
+    gap:10px;
+    border-radius: 15px;
+}
+.taglist-category{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap:5px;
+    min-width: 200px;
+    border-radius: 15px;
+    border: 1px solid black;
+    width: 100%;
+    height:50%;
+    padding:12px;
+    background-color: #496372;
+}
+
+.taglist-tags::-webkit-scrollbar, .taglist-category::-webkit-scrollbar{
+    display: none;
+  }
+
+.category-unselected, .category-selected{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex:1;
+    box-sizing: border-box;
+    background-color:#A14E64;
+    cursor: pointer;
+    border-radius: 10px;
+    white-space: nowrap;
+    padding: 5px;
+    border: 1px solid black;
+}
+.category-selected{
+    background-color:#5B3153;
+}
+.category-unselected:hover{
+    background-color: #5B3153;
+}
+.taglist-tags{
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    height:80%;
+    gap:5px;
+}
+
+.category-selected p, .category-unselected p {
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+  }

@@ -5,6 +5,15 @@ const tagSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true
+    },
+    category:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Category",
+        required: true
+    },
+    count:{
+        type: Number,
+        default: 0
     }
 });
 

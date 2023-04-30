@@ -3,10 +3,13 @@ import express from "express";
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import tagRoutes from "./routes/tagRoutes.js";
-import proposalRoutes from "./routes/proposalRoutes.js"
-import cors from "cors"
+import proposalRoutes from "./routes/proposalRoutes.js";
+import devRoutes from "./routes/devRoutes.js";
+import categoryRoutes from "./routes/CategoryRoutes.js"
 
-const app = express();;
+import cors from "cors";
+
+const app = express();
 
 config();
 connectDB();
@@ -16,7 +19,9 @@ app.use(cors({
 app.use(express.json({ extended: false }));
 app.use("/auth", userRoutes);
 app.use("/tag", tagRoutes);
-app.use("/proposal", proposalRoutes)
+app.use("/proposal", proposalRoutes);
+app.use("/dev", devRoutes);
+app.use("/category", categoryRoutes);
 
 const port = process.env.PORT || 3055;
 app.listen(port, () => {

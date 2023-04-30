@@ -18,7 +18,7 @@ async function registerUser (req, res){
         console.log(error)
         return res.status(500).json(error);
     }
-};
+}
 
 async function loginUser (req, res){
     try {
@@ -29,7 +29,7 @@ async function loginUser (req, res){
         if(!(await bcrypt.compare(req.body.password, userDB.password))){
             throw new customError("the provided credential pair is incorrect, please try again",400)
         }
-        const token = generateToken(userDB._id, userDB.type, userDB.cycle);
+        const token = generateToken(userDB._id, userDB.cycle, userDB.type);
         return res.status(200).json({token: token,msg:"the login was successful"});
     } catch (error) {
         if(error instanceof customError)
@@ -57,7 +57,7 @@ async function getAllUsers(req, res){
     }
 }
 
-function generateToken(id, type="Student",cycle){
+function generateToken(id, cycle, type="Student"){
     try {
         const token = jwt.sign(
             {id: id, type:type, cycle:cycle},
