@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUsers } from "../api/auth";
+import { Navbar } from "../Components/Navbar";
+import { ProposalList } from "../Components/ProposalList";
 
 
 export function HomePage(){
@@ -11,22 +13,11 @@ export function HomePage(){
             navigate("/auth");
         }
     },[])
-    const deleteToken = ()=>{
-        localStorage.setItem("token", null);
-    }
-    const getAllUsers = async ()=>{
-        try {
-            const users = await getUsers();
-            console.log(users);
-        } catch (err) {
-            alert(err);
-        }
-    }
+    
     return(
-        <div>
-            <p> Home page </p>
-            <button onClick={deleteToken}>sign out</button>
-            <button onClick={getAllUsers}>get all users</button>
+        <div className="App">
+            <Navbar/>
+            <ProposalList/>
         </div>
     )
 }

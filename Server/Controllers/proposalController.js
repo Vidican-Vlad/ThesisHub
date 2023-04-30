@@ -1,22 +1,57 @@
 import { request } from "express";
 import Comment from "../models/Comment.js";
 import Proposal from "../models/Proposal.js";
+import File from "../models/File.js";
 import tag from "../models/Tag.js";
 import customError from "../utils/customError.js";
+import multer from "multer";
+import crypto from "crypto";
+import path from "path";
+
+
+const storage = multer.diskStorage({
+    destination: "E:/Programming_stuff/Licenta/Server/images",
+    filename:  function(req, file, cb) {
+        cb(null, generateFilename(file.originalname));
+    }
+})
+
+
+function generateFilename(originalname){
+
+    if(!originalname || typeof originalname != "string"){
+        console.log("file type missing");
+        throw new customError("missing file type", 500);
+    }
+
+    return crypto.randomBytes(20).toString("hex")+Date.now()+path.extname(originalname);
+}
+const upload = multer({storage:storage}).array("files");
+
 
 async function createProposal (req, res){
     try {
-        const proposal = await Proposal.create({
+        let images = req.files.map(file =>(File.create({
+            name: file.filename,
+            extension: path.extname(file.filename),
+            fullPath: path.join(process.env.FULL_PATH, file.filename)
+        })))
+        let images2 = await Promise.all(images);
+        images2 = images2.map(el=>{
+            return el._id;
+        });
+        const proposal = Proposal.create({
             title: req.body.title,
-            description: req.body.title,
+            description: req.body.description,
             studyCycle: req.cycle,
             owner: req.user.id,
             applicants: [],
             approved: null,
-            attachements: null,
+            attachements: images2,
             tags: req.body.tags,
             available:true,
         })
+    
         return res.status(200).json(proposal);
         
     } catch (err) {
@@ -90,4 +125,14 @@ async function getAllCommentsFromAPost(proposalID){
     }
 }
 
-export { createProposal, deleteProposal, createApplication, approveApplication, getComments };
+async function getProposals(req, res){
+    try {
+        const proposals = await Proposal.find({})
+        return res.status(200).json({msg: "Successfull", result:proposals})
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
+    }
+}
+
+export { createProposal, deleteProposal, createApplication, approveApplication, getComments, getProposals, upload };

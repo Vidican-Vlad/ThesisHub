@@ -37,13 +37,9 @@ const proposalSchema = new mongoose.Schema({
             ref: "File"
         }
     ],
-    tags:[
-        {
-            type: mongoose.Schema.Types.ObjectID,
-            required: true,
-            ref: "Tag"
-        }
-    ],
+    tags:[{
+        type: String
+    }],
     available:{
         type:Boolean,
         default:true

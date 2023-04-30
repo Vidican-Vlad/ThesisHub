@@ -1,4 +1,5 @@
 import Proposal from "../../models/Proposal.js"
+import tag from "../../models/Tag.js";
 import Tag from "../../models/Tag.js";
 import User from "../../models/User.js";
 import customError from "../../utils/customError.js"
@@ -8,11 +9,12 @@ import { validateString } from "./validateString.js"
 
 async function validateCreateProposal(req, res, next){
     try {
-
+    
         const { title, description, cycle, tags } = req.body;
         if(req.user.type == "Admin"){
             throw new customError("Administrators aren't allowed to create proposals", 400);
         }
+
         validateString(title);
         validateString(description);
         validateCycle(cycle, req.user.type);
@@ -25,7 +27,7 @@ async function validateCreateProposal(req, res, next){
 
     } catch (err) {
         if(err instanceof customError)
-            return res.status(err.statusCode).json({ms: err.message});
+            return res.status(err.statusCode).json({msg: err.message});
     }
 }
 
@@ -130,7 +132,7 @@ async function validateTags(tags){
             throw new customError("proposal must contain atleast 1 tag and at most " + process.env.TAG_LIMIT + " tags", 400);
         }
         let tagTemp = tags.map(el =>{
-            return Tag.findById(el);
+            return Tag.find({name:el});
         })
         tagTemp = await Promise.all(tagTemp);
         if(tagTemp.some(el =>{

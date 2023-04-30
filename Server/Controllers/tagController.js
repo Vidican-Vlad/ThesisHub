@@ -1,10 +1,12 @@
+import Category from "../models/Category.js";
 import Tag from "../models/Tag.js";
 import customError from "../utils/customError.js";
 
 async function createTag (req, res){
     try {
         const tag = await Tag.create({
-            name:req.body.name
+            name:req.body.name,
+            category:req.body.category
         })
         return res.status(200).json(tag);
     } catch (error) {
@@ -12,7 +14,6 @@ async function createTag (req, res){
         return res.status(500).json(error);
     }
 }
-
 async function deleteTag (req, res){
     try {
         if(!req.params.tagID){
@@ -33,12 +34,19 @@ async function deleteTag (req, res){
 
 async function getAllTags (req, res){
     try {
-        const tags = await Tag.find({});
+        const tags = await Tag
+            .find({})
+            .populate({path: "category", select: ["_id","name","count"]})
+            .select("-__v");
         return res.status(200).json(tags)
     } catch (error) {
         console.log(error);
         return res.status(500).json(error);
     }
 }
+
+
+
+
 
 export { createTag, deleteTag, getAllTags };

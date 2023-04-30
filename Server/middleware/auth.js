@@ -1,8 +1,6 @@
 import jwt from "jsonwebtoken"
 
 function auth (req, res, next){
-    // let token;
-
     if(req.headers.authorization && req.headers.authorization.startsWith("Bearer")){
         try {
             

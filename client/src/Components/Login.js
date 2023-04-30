@@ -10,11 +10,6 @@ export const Login = (props) =>{
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-
-    // useEffect(() => {
-    //     localStorage.setItem("token",'');
-    //   }, [])
-
     const handleSubmit = async (e)=>{
         e.preventDefault();
         const test = validateLogin(password, email);
