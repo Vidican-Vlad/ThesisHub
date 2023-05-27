@@ -1,6 +1,6 @@
 import express from "express";
 import { createComment, deleteComment, updateComment } from "../Controllers/commentController.js";
-import { approveApplication, createApplication, createProposal, deleteProposal, getProposals, upload } from "../Controllers/proposalController.js";
+import { approveApplication, createApplication, createProposal, deleteProposal, getComments, getProposals, getSpecificProposal, upload } from "../Controllers/proposalController.js";
 import { auth } from "../middleware/auth.js";
 import { addCommentToRequest, isCommentOwner, validateCommentCreation } from "../middleware/validators/commentValidator.js";
 import { addProposalToReq, isProposalOwner, validateApplication, validateApproval, validateCreateProposal } from "../middleware/validators/proposalValidator.js";
@@ -17,6 +17,9 @@ router.put("/:proposalID/apply", auth, addProposalToReq, validateApplication, cr
 router.put("/:proposalID/approve", auth, addProposalToReq, isProposalOwner, isAuthorized, validateApproval, approveApplication);
 router.put("/:proposalID/comment/:commentID/edit", auth, addCommentToRequest, isCommentOwner, isAuthorized, updateComment);
 router.get("/", auth, getProposals);
+router.get("/:proposalID", auth, getSpecificProposal);
+router.get("/:proposalID/comments", auth, getComments);
+// router.get("/:pro")
 
 
 export default router;

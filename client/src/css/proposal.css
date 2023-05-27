@@ -1,4 +1,5 @@
 .create-proposal-page{
+    box-sizing: border-box;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -8,16 +9,11 @@
     color: white;
     font-family: 'Roboto Mono', monospace;
 }
-.navbar{
-    width: 100%;
-    height: 10%;
-}   
 .create-proposal-page-main{
-    width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    overflow: hidden;
 }
 .checkbox-unchecked, .checkbox-checked{
     background-color:#A14E64 ;
@@ -36,12 +32,15 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    padding:10px;
-    gap: 10px;
-    width: 15%;
-    height: 95%;
+    padding:20px;
+    gap: 15px;
+    width: 225px;
+    margin-left: 5px; 
+    height: 100%;
     border-radius: 10px;
     background-color:#496372;
+    border: 1px solid black;
+    overflow: hidden;
 }
 .create-proposal-form-wrapper{
     display: flex;
@@ -67,6 +66,7 @@
     padding: 20px;
     gap:10px;
     border-radius: 15px;
+    border: 1px solid black;
 }
 .taglist-category{
     box-sizing: border-box;
@@ -79,8 +79,6 @@
     min-width: 200px;
     border-radius: 15px;
     border: 1px solid black;
-    width: 100%;
-    height:50%;
     padding:12px;
     background-color: #496372;
 }
@@ -109,16 +107,78 @@
     background-color: #5B3153;
 }
 .taglist-tags{
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     overflow: scroll;
-    height:80%;
+    height:auto;
     gap:5px;
 }
 
 .category-selected p, .category-unselected p {
     margin: 0;
-    width: 100%;
     box-sizing: border-box;
     text-align: center;
   }
+.ProposalPage{
+    box-sizing: border-box;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #31334B;
+}
+.proposal-page-main{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+}
+
+.proposal-page-main-main{
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap:15px;
+    border-radius: 20px;
+}
+.proposal-page-sidebar{
+    background-color: red;
+}
+.proposal-item-title{
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    color: white
+}
+
+.proposal-item-tbd{
+    background-color: #496372;
+    padding: 10px;
+    border-radius: 15px;
+    border: 2px solid black;
+}
+.proposal-item-attachementList{
+    display: flex;
+    flex-direction: row;
+}
+.attachment{
+    background-color: green;
+    padding: 5px;
+    border-radius: 15px;
+    border: 2px solid black;
+}
+
+.attachment:hover{
+    cursor: pointer;
+    background-color: darkgreen;
+}
+
+.proposal-item-main{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+
+

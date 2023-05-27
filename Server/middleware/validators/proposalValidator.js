@@ -9,12 +9,13 @@ import { validateString } from "./validateString.js"
 
 async function validateCreateProposal(req, res, next){
     try {
-    
-        const { title, description, cycle, tags } = req.body;
+        if(typeof req.body.tags === "string"){
+            req.body.tags = req.body.tags.split(",");
+        }
+        const { title, description, cycle, tags} = req.body;
         if(req.user.type == "Admin"){
             throw new customError("Administrators aren't allowed to create proposals", 400);
         }
-
         validateString(title);
         validateString(description);
         validateCycle(cycle, req.user.type);
@@ -24,14 +25,17 @@ async function validateCreateProposal(req, res, next){
         else
             req.cycle = req.body.cycle
         next();
-
     } catch (err) {
         if(err instanceof customError)
             return res.status(err.statusCode).json({msg: err.message});
+        console.log(err);
+        return res.status(500).json(err);
     }
 }
 
 async function validateApplication(req, res, next){
+    console.log(req.post);
+    console.log(req.user);
     try {
         if(req.user.type == "Admin"){
             throw new customError("Administrators aren't allowed to apply to proposals", 400);
@@ -39,15 +43,13 @@ async function validateApplication(req, res, next){
         if(req.post.owner._id == req.user.id){
             throw new customError("You can't apply to your own proposal", 400);
         }
-        if(req.post.owner.cycle == req.user.cycle){
+        if(req.post.studyCycle != req.user.cycle){
             throw new customError ("this proposal was not published for your study cycle", 400);
         }
         if(req.user.type == "Student" && req.post.cycle == req.user.cycle){
-            throw new customError ("this proposal was not published for " + req.user.type + " your account type", 400);
+            throw new customError ("this proposal was not published for " + req.user.type + " account types", 400);
         }
-        if(req.post.applicants.some(el =>{
-            return el == req.user.id
-        })){
+        if(req.post.applications.some(el => el.applicant.toString() === req.user.id)){
             throw new customError("You have already applied for this proposal", 400);
         }
         next();
@@ -86,8 +88,7 @@ async function addProposalToReq(req, res, next){
             .findById(req.params.proposalID)
             .populate({
                 path: "owner",
-                model: "User",
-                select: ["cycle", "name"]
+                model: "User"
         })
         if(!proposal){
             throw new customError("the proposal ID provided does not exist", 400);
@@ -105,44 +106,35 @@ async function addProposalToReq(req, res, next){
 
 
 function validateCycle(cycle, accType) {
-    try{
-        const accInput = ["Licenta", "Master"];
-        if(accType == "Student" && cycle){
-            throw new customError("cycle field is not available for Student proposals",400);
-        }  
-        if(accType == "Profesor")
-        {
-            console.log(cycle);
-            if(!cycle)
-                throw new customError("cycle field is mandatory for Professor proposals",400);
-            if(!accInput || !accInput.includes(cycle))
-                throw new customError("wrong value for the cycle field",400);
-        }
-    }catch(err){
-        throw err;
+
+    const accInput = ["Licenta", "Master"];
+    if(accType == "Student" && cycle){
+        throw new customError("cycle field is not available for Student proposals",400);
+    }  
+    if(accType == "Profesor")
+    {
+        console.log(cycle);
+        if(!cycle)
+            throw new customError("cycle field is mandatory for Professor proposals",400);
+        if(!accInput || !accInput.includes(cycle))
+            throw new customError("wrong value for the cycle field",400);
     }
 }
 
 async function validateTags(tags){
-    try {
-        if(!tags || !Array.isArray(tags)){
-            throw new customError("tag list was missing from the request or it was provided with an invalid format", 400);
-        }
-        if(tags.length <1 || tags.length > process.env.TAG_LIMIT){
-            throw new customError("proposal must contain atleast 1 tag and at most " + process.env.TAG_LIMIT + " tags", 400);
-        }
-        let tagTemp = tags.map(el =>{
-            return Tag.find({name:el});
-        })
-        tagTemp = await Promise.all(tagTemp);
-        if(tagTemp.some(el =>{
-            el === null
-        })){
-            throw new customError("at least one of the tag id's provided do not exist", 400);
-        }
-        
-    } catch (error) {
-        throw error;
+
+    if(!tags || !Array.isArray(tags)){
+        throw new customError("tag list was missing from the request or it was provided with an invalid format", 400);
+    }
+    if(tags.length <1 || tags.length > process.env.TAG_LIMIT){
+        throw new customError("proposal must contain atleast 1 tag and at most " + process.env.TAG_LIMIT + " tags", 400);
+    }
+    let tagTemp = tags.map(el =>{
+        return Tag.find({name:el});
+    })
+    tagTemp = await Promise.all(tagTemp);
+    if(tagTemp.some(el =>el === null)){
+        throw new customError("at least one of the tag id's provided do not exist", 400);
     }
 }
 async function isProposalOwner (req, res, next){

@@ -19,4 +19,22 @@ function auth (req, res, next){
 
 }
 
-export { auth };
+function authWS2(socket, next){
+    try {
+        const token = socket.handshake.auth.token;
+        const user = jwt.verify(token, process.env.AUTH_SECRET);
+        socket.user = user;
+        next();
+    } catch (error) {
+        
+        console.log(error);
+        next(error)
+    }
+}
+
+function authWS (token){
+    const user = jwt.verify(token, process.env.AUTH_SECRET);
+    return user;
+}
+
+export { auth, authWS, authWS2 };

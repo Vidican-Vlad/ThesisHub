@@ -30,7 +30,7 @@ async function loginUser (req, res){
             throw new customError("the provided credential pair is incorrect, please try again",400)
         }
         const token = generateToken(userDB._id, userDB.cycle, userDB.type);
-        return res.status(200).json({token: token,msg:"the login was successful"});
+        return res.status(200).json({token: token, msg:"the login was successful", cycle: userDB.cycle, accType:userDB.type, userID: userDB._id});
     } catch (error) {
         if(error instanceof customError)
             return res.status(error.statusCode).json({msg: error.message});

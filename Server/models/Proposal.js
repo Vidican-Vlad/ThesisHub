@@ -20,11 +20,16 @@ const proposalSchema = new mongoose.Schema({
         required: true,
         ref: "User"
     },
-    applicants:[
+    applications:[
         {
-            type: mongoose.Schema.Types.ObjectID,
-            required: true,
-            ref: "User"
+            applicant:{
+                type: mongoose.Schema.Types.ObjectID,
+                required: true,
+                ref: "User"
+            },
+            message:{
+                type: String,
+            },
         }
     ],
     approved:{
@@ -38,7 +43,8 @@ const proposalSchema = new mongoose.Schema({
         }
     ],
     tags:[{
-        type: String
+        type: mongoose.Schema.Types.ObjectID,
+        ref: "Tag"
     }],
     available:{
         type:Boolean,

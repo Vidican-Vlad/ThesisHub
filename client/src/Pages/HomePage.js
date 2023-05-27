@@ -15,7 +15,7 @@ export function HomePage(){
     },[])
     
     return(
-        <div className="App">
+        <div className="homepage">
             <Navbar/>
             <ProposalList/>
         </div>
