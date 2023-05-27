@@ -7,6 +7,10 @@ const fileSchema = new mongoose.Schema({
         required:true,
         unique:true
     },
+    displayName:{
+        type:String,
+        required:true,
+    },
     extension:{
         type:String,
         required:true,

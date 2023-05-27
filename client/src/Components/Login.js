@@ -19,6 +19,9 @@ export const Login = (props) =>{
             try {
                 const res = await login({password, email});
                 localStorage.setItem("token", res.data.token);
+                localStorage.setItem("accType", res.data.accType);
+                localStorage.setItem("cycle", res.data.cycle);
+                localStorage.setItem("userID", res.data.userID);
                 navigate("/");
             } catch (error) {
                 console.log(error)

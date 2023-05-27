@@ -1,0 +1,116 @@
+.messages-page{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background-color: #31334B;
+    width: 100vw;
+    height: 100vh;
+}
+
+.conversation-component{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: black 1px solid;
+    padding: 2px;
+    border-radius: 10px;
+}
+
+.conversation-component:hover{
+    cursor: pointer;
+    background-color: #3a4d59;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.conversation-list{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background-color: #496372;
+    gap: 15px;
+    padding: 5px;
+}
+.messsages-page-main{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap:10px;
+    height: calc(100vh - var(--header-height));
+    width: 100vw;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.message-panel-wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.conversation-list{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+}
+.messages-panel{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: space-between;
+    width: clamp(200px, 80%, 1000px);
+    background-color: #31334B;
+    gap: 10px;
+    border-radius: 30px;
+    height: calc();
+    padding: 5px;
+}
+
+.messages-list{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 5px;
+    gap: 5px;
+    overflow-y: scroll;
+}
+.multiline-p{
+    white-space: pre-line;
+}
+.messages-list::-webkit-scrollbar {
+    display: none;
+  }
+.message{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    border: 1px solid black;
+}
+
+.message-own{
+    align-self: flex-end;
+    background-color: #496372;
+}
+.message-other{
+    align-self: flex-start;
+    background-color: #3a4d59;
+}
+
+.message-header{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#message{
+    min-height:100px;
+    width: clamp(200px, 80%, 1000px);
+    margin-bottom: 15px;
+}

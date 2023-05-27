@@ -31,16 +31,18 @@ const upload = multer({storage:storage}).array("files");
 
 async function createProposal (req, res){
     try {
+        console.log(req.files);
         let images = req.files.map(file =>(File.create({
             name: file.filename,
-            extension: path.extname(file.filename),
+            extension: path.extname(file.filename).slice(1),
+            displayName: file.originalname,
             fullPath: path.join(process.env.FULL_PATH, file.filename)
         })))
         let images2 = await Promise.all(images);
         images2 = images2.map(el=>{
             return el._id;
         });
-        const proposal = Proposal.create({
+        const proposal = await Proposal.create({
             title: req.body.title,
             description: req.body.description,
             studyCycle: req.cycle,
@@ -81,12 +83,7 @@ async function deleteProposal (req, res){
 async function createApplication (req, res){
     try {
         const post = req.post;
-        if(!post?.applicants){
-            post.applicants = [req.user.id];
-        }
-        else{
-            post.applicants = [...post.applicants, req.user.id];
-        }
+        post.applications =[...post.applications , {applicant: req.user.id,message: req.body.message }];
         await post.save();
         return res.status(200).json({msg: "OK"});
     } catch (error) {
@@ -96,7 +93,8 @@ async function createApplication (req, res){
 }
 async function getComments (req, res){
     try {
-        const comments = await getAllCommentsFromAPost(req.post.id);
+        const comments = await Comment.find({parentPost: req.params.proposalID})
+            .populate({path:"owner", select:["name","_id","type"]});
         return res.status(200).json(comments);
     } catch (error) {
         console.log(error);
@@ -116,23 +114,41 @@ async function approveApplication (req, res){
     }
 }
 
-async function getAllCommentsFromAPost(proposalID){
+async function getSpecificProposal(req, res){
     try {
-        const comments = await Comment.find({parentPost: proposalID});
-        return comments;
+        console.log(req.params);
+        const proposal = await Proposal.findById(req.params.proposalID)
+            .populate({path:"tags", select:["_id","name"]})
+            .populate({path:"attachements"});
+        return res.status(200).json(proposal);
+        
     } catch (error) {
-        throw error;
+        console.log(err);
+        return res.status(500).json(err);
     }
 }
 
 async function getProposals(req, res){
     try {
+
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+
+        const startIndex = (page - 1) * limit;
+        const endIndex = page * limit;
+
         const proposals = await Proposal.find({})
-        return res.status(200).json({msg: "Successfull", result:proposals})
+            .limit(limit)
+            .skip(startIndex)
+            .populate({path:"tags", select: ["name", "_id"]})
+            .select(["-__v","-attachements"])
+        const count = await Proposal.countDocuments();
+        return res.status(200).json({msg: "Successful", result:proposals,total:Math.ceil(count/limit)});
+
     } catch (err) {
         console.log(err);
         return res.status(500).json(err);
     }
 }
 
-export { createProposal, deleteProposal, createApplication, approveApplication, getComments, getProposals, upload };
+export { createProposal, deleteProposal, createApplication, approveApplication, getComments, getProposals, upload, getSpecificProposal };

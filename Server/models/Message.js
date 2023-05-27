@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const messageSchema = new mongooose.Schema({
+const messageSchema = new mongoose.Schema({
 
     content: {
         type: String,
@@ -14,17 +14,17 @@ const messageSchema = new mongooose.Schema({
         required: true,
         ref: "User"
     },
-    receiver: {
+    conversation: {
         type: mongoose.Schema.Types.ObjectID,
         required: true,
-        ref: "User"
+        ref: "Conversation"
     },
-    attachement: {
+    attachement: [{
         type: mongoose.Schema.Types.ObjectID,
         ref: "File"
-    }
+    }]
 });
 
-const message = mongooose.model("Message",messageSchema);
+const message = mongoose.model("Message",messageSchema);
 
 export default message;

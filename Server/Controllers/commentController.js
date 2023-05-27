@@ -9,6 +9,7 @@ async function createComment (req, res){
             parentPost: req.post.id,
             owner: req.user.id
         })
+        await comment.populate({path:"owner", select:["name","_id","type"]})
         return res.status(200).json(comment);      
     } catch (error) {
         console.log(error);

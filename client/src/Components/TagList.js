@@ -11,7 +11,7 @@ export const TagList = ({tags, onChange, resetView, resetTags, categoryID})=>{
             <div className="taglist-tags">
             {
                 tags.map(tag =>{
-                    return (tag.category === categoryID) ?  <Checkbox text={tag.text} checked = {tag.checked} onClick = {onChange} key = {tag.text} ></Checkbox> : null;
+                    return (tag.category === categoryID) ?  <Checkbox text={tag.text} checked = {tag.checked} onClick = {onChange} key = {tag.id} ></Checkbox> : null;
                 }) 
             }
             </div>
