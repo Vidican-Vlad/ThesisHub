@@ -2,13 +2,13 @@
 import { instance, generateHeader } from "./Axios";
 
 
-const getProposals = async (pageNr, limit=6) =>{
+const getProposals = async (pageNr, limit=4) =>{
     const res = await instance.get("proposal/", {...generateHeader(), params:{page: pageNr, limit: limit}});
     return res.data;
 }
 
 const getSpecificProposal = async (proposalID) =>{
-    const res = await instance.get("proposal/"+proposalID, generateHeader());
+    const res = await instance.get(`proposal/${proposalID}`, generateHeader());
     return res.data;
 }
 
@@ -38,7 +38,33 @@ const getComments = async(proposalID) =>{
 }
 
 const createComment = async(proposalID, content) =>{
-    const res = await instance.post(`/proposal/${proposalID}/comment`,content, generateHeader());
+    const res = await instance.post(`/proposal/${proposalID}/comment`, content, generateHeader());
     return res.data;
 }
-export { getProposals, getComments, createComment, getTags, getCategories, createProposal, getSpecificProposal, getFileFromBackend }
+
+const getTagsForCategory = async(categoryID) =>{
+    const res = await instance.get(`/tag/category/${categoryID}`, generateHeader());
+    return res.data
+
+}
+
+const getTagsGroupedByCategory = async() =>{
+    const res = await instance.get(`/category/tags`, generateHeader());
+    return res.data
+}
+
+const getFilteredProposals = async(params) =>{
+    const res = await instance.get("/proposal/filtered", generateHeader({}, params));
+    return res.data
+}
+
+const applyToProposal = async(proposalID, payload) =>{
+    const res = await instance.put(`/proposal/${proposalID}/apply`, {payload}, generateHeader())
+    return res.data;
+}
+const approveApplicationApi = async(proposalID, applicantID) =>{
+    const res = await instance.put(`/proposal/${proposalID}/approve`,{applicantID}, generateHeader())
+    return res;
+}
+export { approveApplicationApi, applyToProposal, getProposals, getFilteredProposals, getTagsForCategory, getComments, createComment, getTags, getCategories, createProposal, getSpecificProposal, getFileFromBackend, getTagsGroupedByCategory }
+ 

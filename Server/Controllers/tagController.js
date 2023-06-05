@@ -46,7 +46,49 @@ async function getAllTags (req, res){
 }
 
 
+async function getTagsOfCategory (req, res){
+    try {
+        const tags = await Tag.find({category: req.params.categoryID});
+
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json(error);
+    }
+}
+
+async function getTagsGroupedByCategory(req, res){
+    try {
+        const categoriesWithTags = await Category.aggregate([
+            {
+              $lookup: {
+                from: 'tags',
+                let: { categoryId: '$_id' },
+                pipeline: [
+                  {
+                    $match: {
+                      $expr: { $eq: ['$category', '$$categoryId'] },
+                    },
+                  },
+                  {
+                    $project: {
+                      _id: 1,
+                      name: 1,
+                    },
+                  },
+                ],
+                as: 'tags',
+              },
+            },
+          ]);
+        return res.status(200).json(categoriesWithTags);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json(error);
+    }
+}
 
 
 
-export { createTag, deleteTag, getAllTags };
+
+export { createTag, deleteTag, getAllTags, getTagsOfCategory, getTagsGroupedByCategory };

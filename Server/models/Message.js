@@ -19,7 +19,7 @@ const messageSchema = new mongoose.Schema({
         required: true,
         ref: "Conversation"
     },
-    attachement: [{
+    attachements: [{
         type: mongoose.Schema.Types.ObjectID,
         ref: "File"
     }]

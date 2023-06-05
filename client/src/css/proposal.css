@@ -33,7 +33,7 @@
     display: flex;
     flex-direction: column;
     padding:20px;
-    gap: 15px;
+    gap: 5px;
     width: 225px;
     margin-left: 5px; 
     height: 100%;
@@ -148,18 +148,23 @@
 .proposal-item-title{
     text-align: center;
     font-family: 'Times New Roman', Times, serif;
-    color: white
+    color: white;
+    border: 1px black;
 }
 
 .proposal-item-tbd{
+    display: flex;
+    flex-direction: column;
     background-color: #496372;
     padding: 10px;
     border-radius: 15px;
     border: 2px solid black;
+    gap: 4px;
 }
 .proposal-item-attachementList{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 .attachment{
     background-color: green;
@@ -178,7 +183,10 @@
     flex-direction: column;
     gap: 5px;
 }
-
+.proposal-item-tag{
+    border: 1px solid black;
+    padding: 4px;
+}
 
 
 

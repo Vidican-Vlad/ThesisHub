@@ -9,7 +9,8 @@ import {
     ModalCloseButton,
     Button,
     Input,
-    Stack
+    Stack,
+    color
   } from '@chakra-ui/react'
 import { SuggestedUser } from './SuggestedUser';
 
@@ -34,14 +35,14 @@ import { SuggestedUser } from './SuggestedUser';
 
     return (
       <>
-        <Button onClick={onOpen}>Add users</Button>
+       <Button onClick={onOpen} textColor={"black"} borderColor={"black"} variant="outline">Add users</Button>
         <Modal isOpen={isOpen} onClose={handleClose}  scrollBehavior='inside' colorScheme = "red">
           <ModalOverlay />
-          <ModalContent bg="gray.800" color="white">
+          <ModalContent bg="gray.800" color={"white"}>
             <ModalHeader>Search for users to chat with</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-                <Input placeholder='search for users' onChange = {(e)=>{searchBoxChange(e)}}/>
+                <Input variant = "filled" placeholder='search for users' _placeholder= {{ opacity: 1, color: 'white' }} onChange = {(e)=>{searchBoxChange(e)}} color={"white"}/>
                 <Stack direction={['column']} spacing='10px'>{
                     suggestedUsers.map(user =>{
                         return <SuggestedUser user={user} key={user._id} handleStartConversation = {handleStartConversation}/>

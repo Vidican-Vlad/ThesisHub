@@ -1,7 +1,7 @@
 
-export const Checkbox = ({text, checked, onClick}) => {
+export const Checkbox = ({text, tagID, checked, onClick}) => {
     function handleChange(){
-        onClick(text);
+        onClick({tagID, text});
     }
 
     return(

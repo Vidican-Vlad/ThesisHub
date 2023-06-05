@@ -17,7 +17,7 @@ export const Conversation = ({Conversation, selectedConversation, onChange, curr
         }
     }
     return(
-        <div className="conversation-component" onClick={(e)=>{changeSelectedconversation(e)}}>
+        <div className= {Conversation._id === selectedConversation ? "conversation-component-selected" : "conversation-component"} onClick={(e)=>{changeSelectedconversation(e)}}>
             <p> {user.name} </p>
             <p> {user.email} </p>
         </div>

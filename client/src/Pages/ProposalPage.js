@@ -5,7 +5,18 @@ import { getSpecificProposal } from "../api/proposals";
 import { ProposalItem } from "../Components/ProposalItem";
 import { CommentSection } from "../Components/CommentSection";
 import { Navbar } from "../Components/Navbar";
+
 import { AddConversation } from "../Components/AddConversation";
+import {
+    Drawer,
+    DrawerBody,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerOverlay,
+    DrawerContent,
+    DrawerCloseButton,
+    VStack,
+  } from '@chakra-ui/react'
 import "../css/comment.css";
 import "../css/proposal.css";
 import "../App.css"
@@ -28,17 +39,37 @@ export function ProposalPage(){
     useEffect(()=>{
       getData();
     }, [])
-
+    function updateProposalApplications(application){
+        setProposal((prevProposal) => {
+           return {
+                ...prevProposal,
+                application: [...prevProposal.applications, application]
+            }
+        });
+    }
+    function updateProposalApproved(ApplicantID){
+        setProposal((prevProposal) =>{
+            return prevProposal.approved ?
+            {
+                ...prevProposal,
+                approved: null,
+            } :
+            {
+                ...prevProposal,
+                approved: ApplicantID
+            }
+        })
+    }
     
     return(
             <div className="ProposalPage">
                 <Navbar/>
-                <div className="proposal-page-main">
+                <VStack>
                     <div className="proposal-page-main-main">
-                        {!loading && <ProposalItem proposalData={proposal}/>}
+                        {!loading && <ProposalItem proposalData={proposal} updateProposalApplications = {updateProposalApplications} updateProposalApproved = {updateProposalApproved}/>}
                         <CommentSection proposalID={proposalID}/>
                     </div>
-                </div>
+               </VStack>
             </div>           
     )
 }

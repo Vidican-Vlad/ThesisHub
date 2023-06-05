@@ -10,11 +10,12 @@ export function CreateProposalPage(){
     const accCycle = localStorage.getItem("cycle");
     const accType = localStorage.getItem("accType");
     const descriptionRef = useRef(null);
-    const [title, setTitle] = useState("");
+    const titleRef = useRef(null);
     const [tags, setTags] = useState([]);
     const [cycle, setCycle] = useState(accCycle);
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("");
+    const [selectedTags, setSelectedTags] = useState([]);
     const [viewTags, setViewTags] = useState(false);
     const [files, setFiles] = useState([]);
 
@@ -24,26 +25,32 @@ export function CreateProposalPage(){
             .map(tag => tag.id);
         return tagIds
     }
-    function onChangeTitle(nt){
-        setTitle(nt);
-     }
      function onChangeCycle(nc){
         setCycle(nc);
      }
+    
      function onChangeFile(files){
         setFiles(files);
      }
-     function handleTagChange(tagText){
+     function removeSelectedTag(tagID){
+        setSelectedTags((prevTags) => prevTags.filter(el => el.tagID != tagID));
+     }
+     function handleTagChange(tag){
+        console.log(tag);
         let tagTemp = tags.map(el =>{
-            return el.text === tagText ? {text: el.text, category: el.category, id: el.id, checked: !el.checked,} : el
+            return el.id === tag.tagID ? {text: el.text, category: el.category, id: el.id, checked: !el.checked} : el
         })
         setTags(tagTemp);
+        setSelectedTags((prevTags) =>{
+           return prevTags.find(el => el.tagID === tag.tagID) ? prevTags : [...prevTags, tag]
+        });
      }
     function resetTags(){
         let tagTemp = tags.map(el =>{
             return  {text: el.text, category: el.category, id: el.id, checked: false};
         })
         setTags(tagTemp);
+        setSelectedTags([]);
     }
     async function handleCategoryChange(categoryID){
         setSelectedCategory(categoryID);
@@ -52,7 +59,7 @@ export function CreateProposalPage(){
     async function handleSubmit(){
         try{
             const data = new FormData();
-            data.append("title", title);
+            data.append("title", titleRef.current.value);
             data.append("description", descriptionRef.current.value);
             data.append("tags", getCheckedTagIds());
             if(accType == "Profesor"){
@@ -99,7 +106,7 @@ export function CreateProposalPage(){
                 :
                 <CategoryList categories={categories} onChange={handleCategoryChange} resetTags = {resetTags} />
                 }
-                <ProposalForm descriptionRef = {descriptionRef} handleSubmit = {handleSubmit} changeTitle = {onChangeTitle}  changeCycle = { onChangeCycle } cycle={cycle} onChangeFile = {onChangeFile} />
+                <ProposalForm removeSelectedTag = {removeSelectedTag} tags = {selectedTags} descriptionRef = {descriptionRef} titleRef = {titleRef} handleSubmit = {handleSubmit}  changeCycle = { onChangeCycle } cycle={cycle} onChangeFile = {onChangeFile} />
             </div>
         </div>
     )

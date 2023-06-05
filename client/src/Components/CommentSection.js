@@ -2,6 +2,7 @@ import { CommentItem } from "./CommentItem"
 import { useEffect, useState, useRef } from "react"
 import { getComments, createComment } from "../api/proposals";
 import "../css/comment.css"
+import { Box, VStack } from "@chakra-ui/react";
 export const CommentSection = ({proposalID})=>{
     const textboxRef = useRef(null);
     const [commentList, setCommentList] = useState([]);
@@ -36,13 +37,15 @@ export const CommentSection = ({proposalID})=>{
     return(
         <>
         {!isloading && <div className="CommentSection">
-                <div className="commentList">
-                    {
-                        commentList.map(comment =>{
-                            return <CommentItem key={comment._id} comment={comment}/>
-                        })
-                    }
-                </div>
+                    <Box overflowY={"scroll"} maxH={"500px"}>
+                        <VStack spacing={"2px"} align={"stretch"} >
+                        {
+                            commentList.map(comment =>{
+                                return <CommentItem key={comment._id} comment={comment}/>
+                            })
+                        }
+                        </VStack>
+                    </Box>
                 <div className="add-comment">
                     <textarea ref={textboxRef} placeholder="insert your comment here..."></textarea>
                     <button onClick={postComment}>send</button>
