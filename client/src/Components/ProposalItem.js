@@ -1,10 +1,16 @@
 
+import { HStack, VStack, Divider, Button, Wrap } from "@chakra-ui/react";
 import { getFileFromBackend } from "../api/proposals";
 import "../css/comment.css";
 import "../css/proposal.css";
+import { ApplyToProposalModal } from "../Components/ApplyToProposalModal";
 import { BsFileZip, BsFiletypeDoc, BsFiletypeDocx, BsFiletypeJpg, BsFiletypeMd, BsFiletypePdf, BsFiletypePng, BsFiletypePptx, BsFiletypePpt, BsFiletypeTxt, BsFile } from "react-icons/bs";
-export const ProposalItem = ({proposalData}) =>{
-    console.log(proposalData);
+import { useState } from "react";
+import { applyToProposal, approveApplicationApi } from "../api/proposals";
+import { ApplcationPanel } from "./ApplicationsPanel";
+export const ProposalItem = ({proposalData, updateProposalApplications, updateProposalApproved}) =>{
+    const [showModal, setShowModal] = useState(false)
+    const [showDrawer, setShowDrawer] = useState(false);
 
     async function handleClick(fileID, name){
         try {
@@ -16,6 +22,35 @@ export const ProposalItem = ({proposalData}) =>{
             link.click();
         } catch (err) {
             console.log(err);
+        }
+    }
+
+    function handleShowModal(value){
+        if (typeof value == "boolean" && value !== showModal) {
+            setShowModal(value)
+        }
+    }
+
+    function handleShowDrawer(value){
+        if (typeof value == "boolean" && value !== showDrawer) {
+            setShowDrawer(value)
+        }
+    }
+
+    async function approveApplication(applicantID){
+        // const value = await approveApplicationApi(proposalData._id, applicantID);
+        // console.log(value);
+        updateProposalApproved(applicantID);
+    }
+
+    async function sendApplication(message){
+        try {
+
+            const value = await applyToProposal(proposalData._id,message);
+            updateProposalApplications(value);
+            
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -47,6 +82,8 @@ export const ProposalItem = ({proposalData}) =>{
     }  
     return(
         <div className = "proposal-item-main">
+            <ApplyToProposalModal  approved = {proposalData.approved} sendApplication = {sendApplication} showModal={showModal} proposalID={proposalData._id} handleShowModal = {handleShowModal} proposalCycle = {proposalData.studyCycle} proposalOwner={proposalData.owner}/>
+            <ApplcationPanel approveApplication = {approveApplication} isOpen = {showDrawer} onClose={handleShowDrawer} proposal={proposalData}/>
             <div className = "proposal-item-title">
                 <p>{proposalData.title}</p>
             </div>
@@ -54,15 +91,28 @@ export const ProposalItem = ({proposalData}) =>{
                 <div className="proposal-item-description">
                     <p>{proposalData.description}</p>
                 </div>
-                <div className= "proposal-item-taglist">
-                    {
-                        proposalData.tags.map(tag =>{
-                            return  <div className = "proposal-item-tag" key = {tag._id}>
-                                        <p>{tag.name}</p>
-                                    </div>
-                        })
-                    }
-                </div>
+                <Divider/>
+                <HStack justify={"space-between"}>
+                    <HStack>
+                        <Wrap spacing = "5px">
+                        {
+                            proposalData.tags.map(tag =>{
+                                return  <div className = "proposal-item-tag" key = {tag._id}>
+                                            <p>{tag.name}</p>
+                                        </div>
+                            })
+                        }
+                        </Wrap>
+                    </HStack>
+                    <VStack>
+                        <Divider orientation="vertical"/>
+                        <Button onClick={(e) => {handleShowModal(true)}}> Apply for proposal</Button>
+                        <Button onClick={(e) => {handleShowDrawer(true)}}> See applications </Button>
+                    </VStack>
+                    
+
+                </HStack>
+
             </div>
             <div className= "proposal-item-attachementList">
                 {

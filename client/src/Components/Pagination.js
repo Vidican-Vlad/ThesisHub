@@ -19,7 +19,7 @@ export const Pagination = ({apiCall, total}) =>{
 
     useEffect(()=>{
         setNextPages(generateNextPages());
-    },[]);
+    },[total]);
 
     const handlePageChange = (index) =>{
         if(index => 1 && index <= total && index != currentPage){
@@ -37,26 +37,19 @@ export const Pagination = ({apiCall, total}) =>{
 
     const generateNextPages = ()=>{
         let startIndex, endIndex;
-        if(total - currentPage > 2 && currentPage > 2){
-            endIndex = currentPage + 2;
-            startIndex = currentPage -2;
+        if(total - currentPage < 2){
+            startIndex = Math.max(total - 4, 1);
+        }else{
+            startIndex = Math.max(currentPage-2, 1);
         }
-        else if(total - currentPage <= 2 && currentPage > 2){
-            endIndex = total;
-            startIndex = (total - 4 > 1) ? (total - 4) : 1;
-        }
-        else if(total - currentPage > 2 && currentPage <=2){
-            startIndex = 1;
-            endIndex = 5;
-        }
-        else if(total - currentPage <= 2 &&  currentPage <= 2){
-            startIndex = 1;
-            endIndex = total;
+        if(currentPage  <= 2){
+            endIndex = Math.min(5, total);
+        }else{
+            endIndex = Math.min(currentPage+2, total);
         }
         return arrayRange(startIndex, endIndex, 1);
     }
  
-
     return (
         <div className="pagination">
             <div className="pagination-arrows">      

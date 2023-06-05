@@ -5,6 +5,7 @@
     align-items: center;
     width: 60%;
     height: calc(100% - calc(var(--header-height) + 10px));
+    overflow: hidden;
 }
 
 a{
@@ -31,6 +32,7 @@ a{
     cursor: pointer;
     text-decoration: none;
     border: solid 2px;
+    gap: 3px;
 }
 .proposal-link:hover{
     background-color: #3a4d59;
@@ -57,6 +59,8 @@ a{
     flex-direction: row;
     align-content:start;
     justify-content: start;
+    flex-wrap: wrap;
+    gap: 5px;
 
 }
 

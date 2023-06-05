@@ -16,6 +16,18 @@
     border-radius: 10px;
 }
 
+.conversation-component-selected{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    border: black 1px solid;
+    padding: 2px;
+    border-radius: 10px;
+    background-color: #3a4d59;
+    font-style: italic;
+    font-weight: bold;
+}
+
 .conversation-component:hover{
     cursor: pointer;
     background-color: #3a4d59;
@@ -91,6 +103,8 @@
     flex-direction: column;
     width: 90%;
     border: 1px solid black;
+    padding:5px;
+    border-radius: 10px;
 }
 
 .message-own{

@@ -9,6 +9,7 @@ import { validateString } from "./validateString.js"
 
 async function validateCreateProposal(req, res, next){
     try {
+        console.log(req.body);
         if(typeof req.body.tags === "string"){
             req.body.tags = req.body.tags.split(",");
         }
@@ -16,8 +17,8 @@ async function validateCreateProposal(req, res, next){
         if(req.user.type == "Admin"){
             throw new customError("Administrators aren't allowed to create proposals", 400);
         }
-        validateString(title);
-        validateString(description);
+        validateString(title, "title");
+        validateString(description, "description");
         validateCycle(cycle, req.user.type);
         validateTags(tags);
         if(req.user.type == "Student")
@@ -34,20 +35,19 @@ async function validateCreateProposal(req, res, next){
 }
 
 async function validateApplication(req, res, next){
-    console.log(req.post);
-    console.log(req.user);
+
     try {
-        if(req.user.type == "Admin"){
+        if(req.user.type === "Admin"){
             throw new customError("Administrators aren't allowed to apply to proposals", 400);
         }
-        if(req.post.owner._id == req.user.id){
+        if(req.post.owner._id === req.user.id){
             throw new customError("You can't apply to your own proposal", 400);
         }
-        if(req.post.studyCycle != req.user.cycle){
-            throw new customError ("this proposal was not published for your study cycle", 400);
+        if(req.post.owner.cycle === req.user.cycle){
+            throw new customError ("you can't apply to the proposals of the same type of users as yourself", 400);
         }
-        if(req.user.type == "Student" && req.post.cycle == req.user.cycle){
-            throw new customError ("this proposal was not published for " + req.user.type + " account types", 400);
+        if(req.user.type === "Student" && req.post.studyCycle !== req.user.cycle){
+            throw new customError ("this proposal was not published for your study cycle", 400);
         }
         if(req.post.applications.some(el => el.applicant.toString() === req.user.id)){
             throw new customError("You have already applied for this proposal", 400);

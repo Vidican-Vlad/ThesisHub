@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-	baseURL: "http://localhost:3055/",
+	baseURL: "http://localhost:3055/api",
 });
 
 const generateHeader = (headers={}, params={})=>{

@@ -9,7 +9,8 @@ import { HomePage } from './Pages/HomePage';
 import { CreateProposalPage } from './Pages/CreateProposalPage';
 import { ProposalPage } from './Pages/ProposalPage';
 import { MessagesPage } from './Pages/MessagesPage';
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, ColorModeScript, extendTheme } from '@chakra-ui/react';
+
 
 function App() {
   return (

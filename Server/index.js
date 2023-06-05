@@ -11,6 +11,8 @@ import messagingRoutes from "./routes/MessagingRoutes.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { authWS2 } from "./middleware/auth.js";
+import fs from 'fs';
+import { handleAttachements } from "./Controllers/fileController.js";
 
 import cors from "cors";
 import { createMessage, getUserSugestions } from "./Controllers/messagingController.js";
@@ -20,7 +22,8 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
 	cors: {
 	  origin: "*"
-	}
+	},
+	maxHttpBufferSize: 1e8 // 100 MB
   });
 // socketIoHandler(io);
 
@@ -31,13 +34,13 @@ app.use(cors({
 }))
 
 app.use(express.json({ extended: false }));
-app.use("/auth", userRoutes);
-app.use("/tag", tagRoutes);
-app.use("/proposal", proposalRoutes);
-app.use("/dev", devRoutes);
-app.use("/category", categoryRoutes);
-app.use("/file/", fileRoutes);
-app.use("/messaging/", messagingRoutes);
+app.use("/api/auth", userRoutes);
+app.use("/api/tag", tagRoutes);
+app.use("/api/proposal", proposalRoutes);
+app.use("/api/dev", devRoutes);
+app.use("/api/category", categoryRoutes);
+app.use("/api/file/", fileRoutes);
+app.use("/api/messaging/", messagingRoutes);
 
 const port = process.env.PORT || 3055;
 
@@ -63,9 +66,23 @@ io.on("connection", (socket)=>{
 		console.log(tempconv);
 		socket.to(`${tempconv.user2._id}`).emit("new_conversation", tempconv)
 	})
+	socket.on("file_upload", async (payload)=>{
+		const filesDB = await handleAttachements(payload);
+		if(Array.isArray(filesDB) && filesDB.length > 0 ){
+			socket.emit("file_uploaded", filesDB);
+		}else{
+			console.log("none");
+		}
+	})
+	socket.on("error", err =>{
+		console.log(err)
+	});
 
 
 })
+io.on("error", err =>{
+	console.log(err)
+});
 
 httpServer.listen(port, () => {
 	console.log(`server started on port ${port}`);

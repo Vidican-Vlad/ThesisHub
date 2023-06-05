@@ -1,15 +1,56 @@
-function toCamelCase(str){
-  //console.log(str)
-  if(str.trim() === "")
-    return str
-  let x = str.replace("-", "_");
-  let words = x.split("_").reduce((acc, el, index)=>{
-    if(index == 0 && el[0] === el[0].toLowerCase() && isNaN(el[0])){
-        return acc+el;
-    }
-    return acc + el[0].toUpperCase() + el.substring(1);
-  },"")
-  return words
+export function ParentComponent(){
+
+  const [statefulVariable, setStatefulVariable] = useState(true);
+
+  return(
+    <ChildComponent statefulVariable = {statefulVariable} setStatefulVariable = {setStatefulVariable}/>
+  )
 }
-let string = "The-Stealth-Warrior"
-console.log(toCamelCase(string));
+
+
+export function ChildComponent({statefulVariable, setStatefulVariable}){
+
+  function handleClick(){
+    setStatefulVariable((prevValue) => !prevValue);
+  }
+
+  return (
+    <>
+      <Mybutton onClick = {handleClick}>da</Mybutton>
+      <p>{statefulVariable}</p>
+    </>
+  )
+
+}
+
+
+
+
+export function ParentComponent(){
+
+  const [statefulVariable, setStatefulVariable] = useState(true);
+
+  function wrapperFunction(){
+    setStatefulVariable((prevValue) => !prevValue);
+  }
+
+  return(
+    <ChildComponent statefulVariable = {statefulVariable} wrapperFunction = {wrapperFunction}/>
+  )
+}
+
+
+export function ChildComponent({statefulVariable, wrapperFunction}){
+
+  function handleClick(){
+    wrapperFunction((prevValue) => !prevValue);
+  }
+
+  return (
+    <>
+      <Mybutton onClick = {handleClick}>da</Mybutton>
+      <p>{statefulVariable}</p>
+    </>
+  )
+
+}

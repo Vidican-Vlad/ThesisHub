@@ -7,7 +7,10 @@ import customError from "../utils/customError.js";
 import multer from "multer";
 import crypto from "crypto";
 import path from "path";
-
+import {
+    ObjectId
+  } from 'mongodb';
+import user from "../models/User.js";
 
 const storage = multer.diskStorage({
     destination: "E:/Programming_stuff/Licenta/Server/images",
@@ -83,9 +86,19 @@ async function deleteProposal (req, res){
 async function createApplication (req, res){
     try {
         const post = req.post;
-        post.applications =[...post.applications , {applicant: req.user.id,message: req.body.message }];
+        const userobj = await user.findById(req.user.id);
+        post.applications =[...post.applications , {applicant: req.user.id,message: req.body.payload }];
         await post.save();
-        return res.status(200).json({msg: "OK"});
+        const newDoc = post.applications.find(el => el.applicant == req.user.id);
+        const returnObj = {
+            applicant:{
+                _id: newDoc.applicant,
+                name: userobj.name,
+                email: userobj.email
+            },
+            message: newDoc.message
+        }
+        return res.status(200).json(returnObj);
     } catch (error) {
         console.log(error);
         return res.status(500).json(error);
@@ -116,11 +129,12 @@ async function approveApplication (req, res){
 
 async function getSpecificProposal(req, res){
     try {
-        console.log(req.params);
         const proposal = await Proposal.findById(req.params.proposalID)
             .populate({path:"tags", select:["_id","name"]})
-            .populate({path:"attachements"});
-        return res.status(200).json(proposal);
+            .populate({path:"attachements"})
+            .populate({path:"owner", select: ["_id","email","type"]})
+            .populate({path:"applications.applicant", select: ["_id", "email", "name"]});
+          return res.status(200).json(proposal);
         
     } catch (error) {
         console.log(err);
@@ -133,10 +147,7 @@ async function getProposals(req, res){
 
         const page = parseInt(req.query.page);
         const limit = parseInt(req.query.limit);
-
         const startIndex = (page - 1) * limit;
-        const endIndex = page * limit;
-
         const proposals = await Proposal.find({})
             .limit(limit)
             .skip(startIndex)
@@ -151,4 +162,89 @@ async function getProposals(req, res){
     }
 }
 
-export { createProposal, deleteProposal, createApplication, approveApplication, getComments, getProposals, upload, getSpecificProposal };
+
+function buildQuery({ studyCycle, targetUser, title, description, logicalOperator, tagsList }){
+    const pipeline = [];
+    // Construct the conditions for studyCycle, targetUser, title, and description
+    const conditions = [];
+    if (studyCycle) conditions.push({ studyCycle });
+    if (title) conditions.push({ title: { $regex: title, $options: 'i' } });
+    if (description) conditions.push({ description: { $regex: description, $options: 'i' } });
+  
+    if (conditions.length > 0) {
+      // chain all conditions togheter besides tags and targetUser which must be treated individually
+        pipeline.push({ $match: { $and: conditions } });
+    }
+    // Handle logicalOperator
+    if(Array.isArray(tagsList) && tagsList.length > 0){
+        const taglist2 = tagsList.map(el => new ObjectId(el));
+        if (logicalOperator === 'true'){
+            pipeline.push({ $match: { tags: { $all: taglist2 } } });
+        }else{
+            pipeline.push({ $match: { tags: { $in: taglist2 } } });
+        }
+    }
+    pipeline.push({
+        $lookup: {
+            from: 'users',
+            let: { ownerId: '$owner' },
+            pipeline: [
+            {
+                $match: {
+                    $expr: { $eq: ['$_id', '$$ownerId'] }
+                }
+            },
+            {
+                $project: {
+                    _id: 1,
+                    name: 1,
+                    email: 1,
+                    type: 1
+                }
+            }],
+          as: 'owner'
+        }
+      });
+      pipeline.push({
+        $addFields: {
+          owner: { $arrayElemAt: ['$owner', 0] }
+        }
+      });
+    if (targetUser) {
+        //if targetUser parameter is specified then populate the owner attribute with all of the values and then filter out
+        //those proposals who's owner is not of the desired type
+        pipeline.push({ $match: { 'owner.type': targetUser } });
+    }
+    return pipeline;
+}
+
+const getProposalsFiltered = async (req, res) => {
+    try {
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+        const startIndex = (page - 1) * limit;
+        let pipeline =  buildQuery(req.query);
+        const proposals = await Proposal.aggregate([...pipeline,
+            {$skip: startIndex},
+            {$limit: limit},
+            {
+                $lookup: {
+                    from: "tags",
+                    localField: "tags",
+                    foreignField: "_id",
+                    as: "tags"
+                }
+            },
+    ]);
+        const counttemp = await Proposal.aggregate([...pipeline,
+        {$count : "total"}]);
+        const count = counttemp.length > 0 ? counttemp[0].total : 0
+        res.status(200).json({proposals: proposals, total: Math.ceil(count/limit)});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'An error occurred while fetching proposals.' });
+    }
+  };
+  
+
+export { createProposal, getProposalsFiltered, deleteProposal, createApplication, approveApplication, getComments, getProposals, upload, getSpecificProposal };

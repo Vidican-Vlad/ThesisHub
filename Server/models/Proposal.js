@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const proposalSchema = new mongoose.Schema({
-
     title:{
         type: String,
         required: true
