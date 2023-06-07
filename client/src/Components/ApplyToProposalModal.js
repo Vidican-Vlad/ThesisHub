@@ -7,7 +7,8 @@ import {
     ModalBody,
     ModalCloseButton,
     Textarea,
-    Button
+    Button,
+    Text
   } from '@chakra-ui/react'
 import { useRef } from 'react';
 
@@ -44,7 +45,7 @@ export const ApplyToProposalModal = ({sendApplication, showModal, proposalID, pr
                     <ModalBody>
                         {
                             (approved) ?
-                            <Text>"an application was already approved by the owner of this proposal</Text>:
+                            <Text color={"white"}>an application was already approved by the owner of this proposal</Text>:
                             <Textarea placeholder='leave your message here...' color={"white"} ref = {messageRef}/>
                         }
                         
