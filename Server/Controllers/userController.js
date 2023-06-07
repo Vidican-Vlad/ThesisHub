@@ -39,6 +39,34 @@ async function loginUser (req, res){
     }
 }
 
+async function validateRegistration  (req, res){
+    try {
+        const user = await User.create({
+            email: req.usertmp.email,
+            name:req.usertmp.name,
+            password: req.usertmp.password,
+            type: req.user.type,
+            cycle: req.user.cycle
+        })
+        return res.status(200).json({msg: "account registered successfully"});
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+}
+
+async function confirmRegister (req, res){
+    try {
+        const user = req.usertemp;
+        if(user.securityKey === req.body.key){
+            user.validated = true;
+            await user.save();
+        }
+        return res.status(200).json({msg: "the account confirmation was succesful, please wait for an administrator to validate your request"});
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+}
+
 
 async function hashpass (pass){
 
@@ -68,5 +96,22 @@ function generateToken(id, cycle, type="Student"){
         console.log(err);
     }
 }
+
+function generateRandomString(length) {
+    if (typeof length !== 'number' || length <= 0) {
+        throw new Error('Length must be a positive number.');
+      }
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var randomString = '';
+  
+    for (var i = 0; i < 5; i++) {
+      var randomIndex = Math.floor(Math.random() * characters.length);
+      randomString += characters.charAt(randomIndex);
+    }
+  
+    return randomString;
+  }
+
+
 
 export { registerUser, loginUser, getAllUsers };

@@ -24,6 +24,10 @@ const userTmpSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    validated:{
+        type:Boolean,
+        default: false
+    },
     proofOfIdentity: [
         {
             type: mongoose.Schema.Types.ObjectID,
@@ -32,7 +36,6 @@ const userTmpSchema = new mongoose.Schema({
             
         }
     ]
-
 });
 
 const userTmp = mongoose.model("UserTmp",userTmpSchema);

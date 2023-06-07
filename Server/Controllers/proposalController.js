@@ -96,7 +96,8 @@ async function createApplication (req, res){
                 name: userobj.name,
                 email: userobj.email
             },
-            message: newDoc.message
+            message: newDoc.message,
+            _id: newDoc._id
         }
         return res.status(200).json(returnObj);
     } catch (error) {
