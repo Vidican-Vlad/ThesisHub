@@ -6,13 +6,6 @@ import { ProposalItem } from "../Components/ProposalItem";
 import { CommentSection } from "../Components/CommentSection";
 import { Navbar } from "../Components/Navbar";
 import {
-    Drawer,
-    DrawerBody,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerOverlay,
-    DrawerContent,
-    DrawerCloseButton,
     VStack,
   } from '@chakra-ui/react'
 import "../css/comment.css";

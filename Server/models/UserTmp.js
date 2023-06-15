@@ -17,7 +17,7 @@ const userTmpSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        enum: ["Professor","Student","Admin"],
+        enum: ["Profesor","Student","Admin"],
         required: true
     },
     securityKey: {
@@ -27,6 +27,11 @@ const userTmpSchema = new mongoose.Schema({
     validated:{
         type:Boolean,
         default: false
+    },
+    cycle: {
+        type: String,
+        enum: ["Licenta", "Master", ""],
+        default: null
     },
     proofOfIdentity: [
         {

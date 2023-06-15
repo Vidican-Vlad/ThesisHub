@@ -7,6 +7,7 @@ export const Navbar = ()=>{
     const genClassName = ({isActive, isPending}) =>{
        return isActive ? "active-navbar-link" : "navbar-link"
     }
+    const user = localStorage.getItem("accType");
     return(
         <div className="navbar navbar-grid">
             <NavLink to = "/About" element = {<AboutPage/>}>
@@ -14,9 +15,9 @@ export const Navbar = ()=>{
             </NavLink>
             <div className="navbar-links">
                 <NavLink className ={genClassName} to = "/">Home</NavLink>
-                <NavLink className = {genClassName} to = "/proposal/create" >Create Proposal</NavLink>
+                {(user !== "Admin") && <NavLink className = {genClassName} to = "/proposal/create" >Create Proposal</NavLink>}
                 <NavLink className = {genClassName} to = "/messages/">Conversations</NavLink>
-                <NavLink className = {genClassName} to = "/Profile">own account</NavLink>
+                {(user === "Admin") && <NavLink className = {genClassName} to = "/admin/">dashboard</NavLink>}
             </div>
         </div>
     )

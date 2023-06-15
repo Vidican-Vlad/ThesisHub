@@ -1,10 +1,10 @@
 import { useRef, useState, useEffect } from "react";
 import Axios from 'axios'
 import { RadioQuestion } from "./RadioQuestion";
-import { register } from "../api/auth";
+
 import { validateRegister } from "../utils/validators";
 import { FormInput } from "./FormInput";
-export const Register = (props) =>{
+export const Register = ({onFormSwitch, onChangeFile, registerSubmit}) =>{
 
     const [fname, setFName] = useState("");
     const [lname, setLName] = useState("");
@@ -12,7 +12,7 @@ export const Register = (props) =>{
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [accType, setAccountType] = useState("");
-    const [studyCycle, setStudyCycle] = useState(null);
+    const [studyCycle, setStudyCycle] = useState("");
 
     useEffect(() => {
         localStorage.setItem("token",'');
@@ -31,24 +31,20 @@ export const Register = (props) =>{
                 password: password,
                 cycle:studyCycle,
             }
-            try{
-                const response = await register(data)
-                alert("The registering was successfull, please now login with your account!");
-                props.onFormSwitch("login");
-                console.log(response)
-            }catch(err){
-                console.log(err)
-            }
+
+            registerSubmit(data);
         }
     }
     const handleAccTypeChange = (value) =>{
         setAccountType(value);
-        setStudyCycle(null);
+        setStudyCycle("");
     }
     const handleStudyCycleChange = (value) =>{
         setStudyCycle(value);
     }
-
+    const handleFileChange = (e)=>{
+        onChangeFile(Array.from(e.target.files));
+    }
     return (
         <div className="auth-form-container">
             <form onSubmit={handleSubmit} className="register-form">
@@ -70,9 +66,10 @@ export const Register = (props) =>{
                         checked={studyCycle} question = "I am studying for a:" handleClick={handleStudyCycleChange} style = {accType == "Student" ? {visibility: "visible"} : {transform: "scale(0.05)" , visibility: "hidden"}}>
                     </RadioQuestion>
                 }
+                <input type="file" onChange={handleFileChange} multiple/>
                 <div id="form-footer">
                     <button className = "submit-button" type= "submit">Register</button>
-                    <button className="link-button" onClick= {() =>props.onFormSwitch('login')}>Already have an account? log in instead</button>
+                    <button className="link-button" onClick= {() => onFormSwitch('login')}>Already have an account? log in instead</button>
                 </div>
             </form>
 

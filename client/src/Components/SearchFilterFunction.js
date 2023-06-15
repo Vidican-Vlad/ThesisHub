@@ -133,7 +133,7 @@ export function SearchFilterFunction({searchForProposals, drawerOpen, drawerClos
                                 <Modal isOpen = {isOpen} onClose = {onClose} scrollBehavior='inside'>
                                     <ModalOverlay/>
                                     <ModalContent  bg = "gray.800" color = "white">
-                                        <ModalHeader>Seleect all tags</ModalHeader>
+                                        <ModalHeader>Select all tags</ModalHeader>
                                         <ModalBody>
                                             <Accordion>
                                                 {

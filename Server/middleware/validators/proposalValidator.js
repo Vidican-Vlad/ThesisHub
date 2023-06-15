@@ -20,7 +20,7 @@ async function validateCreateProposal(req, res, next){
         validateString(title, "title");
         validateString(description, "description");
         validateCycle(cycle, req.user.type);
-        validateTags(tags);
+        await validateTags(tags);
         if(req.user.type == "Student")
             req.cycle = req.user.cycle
         else
@@ -49,9 +49,9 @@ async function validateApplication(req, res, next){
         if(req.user.type === "Student" && req.post.studyCycle !== req.user.cycle){
             throw new customError ("this proposal was not published for your study cycle", 400);
         }
-        // if(req.post.applications.some(el => el.applicant.toString() === req.user.id)){
-        //     throw new customError("You have already applied for this proposal", 400);
-        // }
+        if(req.post.applications.some(el => el.applicant.toString() === req.user.id)){
+            throw new customError("You have already applied for this proposal", 400);
+        }
         next();
     } catch (error) {
         if(error instanceof customError){

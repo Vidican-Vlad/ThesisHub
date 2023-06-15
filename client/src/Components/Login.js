@@ -6,37 +6,29 @@ import { FormInput } from "./FormInput";
 import { useNavigate } from "react-router-dom";
 
 
-export const Login = (props) =>{
+export const Login = ({onFormSwitch, loginSubmit}) =>{
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate();
-    const handleSubmit = async (e)=>{
+    function handleSubmit(e){
         e.preventDefault();
-        const test = validateLogin(password, email);
-        if(!test == "")
-            alert(test);
-        else{
-            try {
-                const res = await login({password, email});
-                localStorage.setItem("token", res.data.token);
-                localStorage.setItem("accType", res.data.accType);
-                localStorage.setItem("cycle", res.data.cycle);
-                localStorage.setItem("userID", res.data.userID);
-                navigate("/");
-            } catch (error) {
-                console.log(error)
-            }
-        }
+        validateLogin(password, email);
+    //     if(!test == "")
+            // alert(test);
+    //     else{
+    //       loginSubmit({email, password});
+    //     }
+    // }
+    loginSubmit({email, password});
     }
 
     return (
-        <div className="auth-form-container">
-            <form onSubmit = {handleSubmit} className="login-form">
+        <div className="auth-form-container" onSubmit={handleSubmit}>
+            <form className="login-form">
                 <FormInput type="Email" name = "Email" text = "Email" placeholder="email@domain.com" handleChange={setEmail}></FormInput>
                 <FormInput type="Password" name ="Password" text = "Password" placeholder = "********" handleChange={setPassword}></FormInput>
                 <div id="form-footer">
-                    <button className ="submit-button" type= "submit">Log in!</button>
-                    <button className="link-button" onClick={()=>props.onFormSwitch("register")}>no account? sign up now!</button>
+                    <button className = "submit-button" type="submit">Log in!</button>
+                    <button className="link-button" onClick={()=>onFormSwitch("register")}>no account? sign up now!</button>
                 </div>
             </form>
         </div>
