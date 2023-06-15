@@ -9,7 +9,7 @@ export const CommentItem = ({comment}) =>{
                     {comment.owner.type === "Student" ? <FaUserGraduate/> : <GiTeacher/>}
                     <p>{comment.owner.name}</p>
                 </div>
-                <p>{new Date(comment.postedAt).toLocaleDateString("ro-RO", { day: "numeric", month: "long", year: "numeric"})}</p>
+                <p>{new Date(comment.postedAt).toLocaleDateString("ro-RO", { day: "numeric", month: "numeric", year: "numeric"})}</p>
             </div>
         </div>
     )

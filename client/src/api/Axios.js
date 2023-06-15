@@ -4,16 +4,16 @@ const instance = axios.create({
 	baseURL: "http://localhost:3055/api",
 });
 
-const generateHeader = (headers={}, params={})=>{
+const generateHeader = (headersArg={}, paramsArg={})=>{
     return({
             headers: {
                 authorization: `Bearer ${(localStorage.getItem("token"))}`,
                 "Content-type": "application/json",
-                ...headers
+                ...headersArg
             },
             params:{
-                ...params
-            }
+                ...paramsArg
+            },
         }
     )
 } 

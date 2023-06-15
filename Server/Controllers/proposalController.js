@@ -34,7 +34,7 @@ const upload = multer({storage:storage}).array("files");
 
 async function createProposal (req, res){
     try {
-        console.log(req.files);
+
         let images = req.files.map(file =>(File.create({
             name: file.filename,
             extension: path.extname(file.filename).slice(1),
@@ -54,10 +54,10 @@ async function createProposal (req, res){
             approved: null,
             attachements: images2,
             tags: req.body.tags,
-            available:true,
+            available:true
         })
-    
-        return res.status(200).json(proposal);
+
+        return res.status(200).json({proposal});
         
     } catch (err) {
         console.log(err);
@@ -96,7 +96,8 @@ async function createApplication (req, res){
                 name: userobj.name,
                 email: userobj.email
             },
-            message: newDoc.message
+            message: newDoc.message,
+            _id: newDoc._id
         }
         return res.status(200).json(returnObj);
     } catch (error) {

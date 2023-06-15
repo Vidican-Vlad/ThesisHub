@@ -5,16 +5,7 @@ import { getSpecificProposal } from "../api/proposals";
 import { ProposalItem } from "../Components/ProposalItem";
 import { CommentSection } from "../Components/CommentSection";
 import { Navbar } from "../Components/Navbar";
-
-import { AddConversation } from "../Components/AddConversation";
 import {
-    Drawer,
-    DrawerBody,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerOverlay,
-    DrawerContent,
-    DrawerCloseButton,
     VStack,
   } from '@chakra-ui/react'
 import "../css/comment.css";
@@ -39,11 +30,15 @@ export function ProposalPage(){
     useEffect(()=>{
       getData();
     }, [])
+
+    useEffect(()=>{
+        console.log(proposal);
+    }, [proposal]);
     function updateProposalApplications(application){
         setProposal((prevProposal) => {
            return {
                 ...prevProposal,
-                application: [...prevProposal.applications, application]
+                applications: [...prevProposal.applications, application]
             }
         });
     }

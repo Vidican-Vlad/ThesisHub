@@ -20,7 +20,7 @@ async function validateCreateProposal(req, res, next){
         validateString(title, "title");
         validateString(description, "description");
         validateCycle(cycle, req.user.type);
-        validateTags(tags);
+        await validateTags(tags);
         if(req.user.type == "Student")
             req.cycle = req.user.cycle
         else

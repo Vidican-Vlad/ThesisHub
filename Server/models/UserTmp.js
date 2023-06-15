@@ -17,12 +17,21 @@ const userTmpSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        enum: ["Professor","Student","Admin"],
+        enum: ["Profesor","Student","Admin"],
         required: true
     },
     securityKey: {
         type: String,
         required: true
+    },
+    validated:{
+        type:Boolean,
+        default: false
+    },
+    cycle: {
+        type: String,
+        enum: ["Licenta", "Master", ""],
+        default: null
     },
     proofOfIdentity: [
         {
@@ -32,7 +41,6 @@ const userTmpSchema = new mongoose.Schema({
             
         }
     ]
-
 });
 
 const userTmp = mongoose.model("UserTmp",userTmpSchema);

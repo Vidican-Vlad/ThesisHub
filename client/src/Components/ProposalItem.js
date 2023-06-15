@@ -11,7 +11,7 @@ import { ApplcationPanel } from "./ApplicationsPanel";
 export const ProposalItem = ({proposalData, updateProposalApplications, updateProposalApproved}) =>{
     const [showModal, setShowModal] = useState(false)
     const [showDrawer, setShowDrawer] = useState(false);
-
+    const user = localStorage.getItem("userID");
     async function handleClick(fileID, name){
         try {
             const res = await getFileFromBackend(fileID);
@@ -39,18 +39,33 @@ export const ProposalItem = ({proposalData, updateProposalApplications, updatePr
 
     async function approveApplication(applicantID){
         // const value = await approveApplicationApi(proposalData._id, applicantID);
-        // console.log(value);
-        updateProposalApproved(applicantID);
+        //console.log(value);
+        try {
+            const res = await approveApplicationApi(proposalData._id, applicantID);
+            console.log(res);
+            updateProposalApproved(applicantID); 
+            setShowDrawer(false);
+        } catch (error) {
+            if(error.response?.data?.msg){
+                alert(error.response?.data?.msg);
+            }else{
+                console.log(error);
+            }
+        }
+
     }
 
     async function sendApplication(message){
         try {
-
             const value = await applyToProposal(proposalData._id,message);
             updateProposalApplications(value);
-            
+            setShowModal(false);
         } catch (error) {
-            console.log(error);
+            if(error.response?.data?.msg){
+                alert(error.response?.data?.msg);
+            }else{
+                console.log(error);
+            }
         }
     }
 
@@ -82,7 +97,7 @@ export const ProposalItem = ({proposalData, updateProposalApplications, updatePr
     }  
     return(
         <div className = "proposal-item-main">
-            <ApplyToProposalModal  approved = {proposalData.approved} sendApplication = {sendApplication} showModal={showModal} proposalID={proposalData._id} handleShowModal = {handleShowModal} proposalCycle = {proposalData.studyCycle} proposalOwner={proposalData.owner}/>
+            <ApplyToProposalModal  approved = {proposalData?.approved} sendApplication = {sendApplication} showModal={showModal} proposalID={proposalData?._id} handleShowModal = {handleShowModal} proposalCycle = {proposalData?.studyCycle} proposalOwner={proposalData?.owner}/>
             <ApplcationPanel approveApplication = {approveApplication} isOpen = {showDrawer} onClose={handleShowDrawer} proposal={proposalData}/>
             <div className = "proposal-item-title">
                 <p>{proposalData.title}</p>
@@ -106,7 +121,7 @@ export const ProposalItem = ({proposalData, updateProposalApplications, updatePr
                     </HStack>
                     <VStack>
                         <Divider orientation="vertical"/>
-                        <Button onClick={(e) => {handleShowModal(true)}}> Apply for proposal</Button>
+                        <Button onClick={(e) => {handleShowModal(true)}} isDisabled = {user === proposalData.owner._id ? true : false}> Apply for proposal</Button>
                         <Button onClick={(e) => {handleShowDrawer(true)}}> See applications </Button>
                     </VStack>
                     

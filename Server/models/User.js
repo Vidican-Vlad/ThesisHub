@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
     },
     cycle: {
         type: String,
-        enum: ["Licenta", "Master", null],
+        enum: ["Licenta", "Master", ""],
         default: null
     }
 });

@@ -14,7 +14,6 @@ const validateEmail = (email) =>{
     let err = validateString(email, "email")
     const splitAround = email.trim().split("@");
     let splitPoint;
-    console.log(splitAround)
     if(splitAround.length !== 2 || splitAround[0].length == 0 || splitAround[1].length == 0)
         err+='missing @ from email field or invalid format\n'
     else{
