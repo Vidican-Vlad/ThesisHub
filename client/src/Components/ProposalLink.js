@@ -31,7 +31,7 @@ export const ProposalLink = ({value}) =>{
                             })
                         }
                     </div>
-                    <p>cycle: {value.studyCycle}</p>
+                    <p>Study Cycle: {value.studyCycle === "Licenta" ? "Bachelor" : "Master"}</p>
                 </div>
             </div>
         </Link>

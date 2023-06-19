@@ -25,10 +25,10 @@ a{
     border-radius: 15px;
     background-color: #496372;
     text-align: center;
-    width: 100%;
+    width: clamp(300px, 450px, 600px);
     height: auto;
     margin:4px;
-    padding: 1%;
+    padding: 15px;
     cursor: pointer;
     text-decoration: none;
     border: solid 2px;

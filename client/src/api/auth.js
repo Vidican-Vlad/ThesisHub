@@ -27,6 +27,7 @@ async function confirmRegistration(userTmpID, securityKey){
 
 async function validateRegistration(payload){
     const res = await instance.put(`auth/validate`, payload, generateHeader());
+    return res;
     //console.log(generateHeader({},{},{userTmpID, validate, message}));
     //return res;
 }

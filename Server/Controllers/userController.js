@@ -60,19 +60,23 @@ async function loginUser (req, res){
 async function handleValidation  (req, res){
     try {
         console.log(req.body);
+        console.log(req.userTmp)
         if(req.body.validationStatus){
-            // await User.create({
-            //     email: req.userTmp.email,
-            //     name:req.userTmp.name,
-            //     password: req.userTmp.password,
-            //     type: req.user.type,
-            //     cycle: req.user.cycle
-            // })
+            console.log("da")
+            await User.create({
+                email: req.userTmp.email,
+                name:req.userTmp.name,
+                password: req.userTmp.password,
+                type: req.userTmp.type,
+                cycle: req.userTmp.cycle
+            })
             accountValidated(req.userTmp.email, req.userTmp.name);
-            return res.status(200).json({msg: "account registered successfully"});
+            await userTmp.findByIdAndDelete(req.userTmp._id);
+            return res.status(200).json({msg: "account registered successfully", removedID: req.userTmp._id});
         }else{
             accountRejected(req.userTmp.email, req.userTmp.name, req.body.message);
-            return res.status(200).json({msg: "the onboarding request was deleted and the user was informed"});
+            await userTmp.findByIdAndDelete(req.userTmp._id);
+            return res.status(201).json({msg: "the onboarding request was deleted and the user was informed", removedID: req.userTmp._id});
         }
         //userTmp.findByIdAndDelete(req.userTmp._id)
       

@@ -66,6 +66,13 @@ export function AdminDashboard(){
         try {
             const answer = await validateRegistration({userTmpID, validationStatus, message});
             console.log(answer);
+            if(answer?.data?.msg){
+                alert(answer.data.msg);
+            }
+            resetRejectModal();
+            setTempUsers((prevTempUsers) =>{
+                return prevTempUsers.filter(el => el._id !== answer.data.removedID)
+            });
         } catch (error) {   
             console.log(error);
         }
@@ -78,9 +85,9 @@ export function AdminDashboard(){
     useEffect(()=>{
         getUsers();
     }, []);
-    // useEffect(()=>{
-    //     console.log(selectedUser);
-    // }, [selectedUser]);
+    useEffect(()=>{
+        console.log(tempUsers);
+    }, [tempUsers]);
 
     return(
         <div className="admin-dashboard">
@@ -101,8 +108,9 @@ export function AdminDashboard(){
                         </ModalContent>
                     </ModalOverlay>
                 </Modal>
-                {isNonEmptyArray(tempUsers)&& <Accordion color={"white"} border={"2px"} width={"2xl"}>
-                {
+                {isNonEmptyArray(tempUsers)?
+                <Accordion color={"white"} border={"2px"} width={"2xl"}>
+                    {
                     tempUsers.map(el =>{
                         return <AccordionItem key = {el._id}>
                             <AccordionButton>
@@ -132,7 +140,8 @@ export function AdminDashboard(){
                         </AccordionItem>
                     })    
                 }
-                </Accordion>}
+                </Accordion>:<Text color={"white"}>Currently no onboarding requests waiting for approval</Text>}
+
             </Center>
         </div>
     )

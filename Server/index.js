@@ -11,7 +11,6 @@ import messagingRoutes from "./routes/MessagingRoutes.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { authWS2 } from "./middleware/auth.js";
-import fs from 'fs';
 import { handleAttachements } from "./Controllers/fileController.js";
 
 import cors from "cors";

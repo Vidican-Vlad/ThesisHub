@@ -36,22 +36,25 @@ export const CommentSection = ({proposalID})=>{
 
     return(
         <>
-        {!isloading && <div className="CommentSection">
-                    <Box overflowY={"scroll"} maxH={"500px"}>
-                        <VStack spacing={"2px"} align={"stretch"} >
-                        {
-                            commentList.map(comment =>{
-                                return <CommentItem key={comment._id} comment={comment}/>
-                            })
-                        }
-                        </VStack>
-                    </Box>
-                <div className="add-comment">
-                    <textarea ref={textboxRef} placeholder="insert your comment here..."></textarea>
-                    <button onClick={postComment}>send</button>
-
-                </div>
+        {!isloading &&
+        <div className="Comment-section">
+            <div className="Comments">
+                {
+                    commentList.map(comment =>{
+                        return <CommentItem key={comment._id} comment={comment}/>
+                    })
+                }
+                {/* <VStack spacing={"2px"} align={"stretch"} height={"300px"}>
+                {
+                    
+                }
+                </VStack> */}
             </div>
+            <div className="Add-comment">
+                <textarea ref={textboxRef} placeholder="insert your comment here..."></textarea>
+                <button onClick={postComment}>send</button>
+            </div>
+        </div>
         }
         </>
     )
