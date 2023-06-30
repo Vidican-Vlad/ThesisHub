@@ -42,8 +42,6 @@ export function HomePage(){
         let result = await getFilteredProposals(temp);
         setProposals(result.proposals);
         setTotal(result.total);
-        console.log(result);
-        console.log(page);
     }
 
 

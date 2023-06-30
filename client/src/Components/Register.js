@@ -55,7 +55,7 @@ export const Register = ({onFormSwitch, onChangeFile, registerSubmit}) =>{
                 <FormInput type="Password" name="ConfirmPassword" text="Confirm password" placeholder="*******" handleChange={setConfirmPassword}></FormInput>
                 <RadioQuestion options={[
                     {value:"Student", text: "Student"},
-                    {value:"Profesor", text: "Proffesor"},
+                    {value:"Profesor", text: "Professor"},
                     {value:"Admin", text: "Administrator"}]} 
                     checked={accType} question = "I am a:" handleClick={handleAccTypeChange}>
                 </RadioQuestion>

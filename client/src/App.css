@@ -1,6 +1,9 @@
 /*
   1. Use a more-intuitive box-sizing model.
 */
+html{
+  background-color: #31334B
+}
 *, *::before, *::after {
   box-sizing: border-box;
 }

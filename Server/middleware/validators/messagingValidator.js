@@ -27,7 +27,6 @@ async function validateCreateConversation (req, res, next){
                 {$and: [{user1: req.body.userID}, {user2: req.user.id}]}
             ]
         }).exec();
-        console.log(existingConversation);
         if(existingConversation.length > 0){
             throw new customError("a conversation with  the selected user already exists", 400);
         }

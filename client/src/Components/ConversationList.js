@@ -8,19 +8,6 @@ import { Divider } from "@chakra-ui/react";
 export const ConversationList = ({resetSuggestedUsers, selectedConversation, conversations, onChange, handleTextInput, handleStartConversation, suggestedUsers})=>{
 
     const currentUser = localStorage.getItem("userID");
-//     async function getConversations(){
-//         try {
-//             let convTemp = await getConversations();
-//             setConversations(userTemp);
-//         } catch (err) {
-//             console.log(err);
-//         }
-//     }
-
-//    useEffect(()=>{
-//     getData();
-//    }, []);
-
    return(
     <div className="conversation-list">
         <AddConversation handleStartConversation = {handleStartConversation} suggestedUsers={suggestedUsers} handleTextInput = {handleTextInput} resetSuggestedUsers = {resetSuggestedUsers} />

@@ -5,7 +5,8 @@ export const Checkbox = ({text, tagID, checked, onClick}) => {
     }
 
     return(
-        <div className = {checked ? "checkbox-checked" : "checkbox-unchecked"} onClick={handleChange}>
+        <div className = {checked ? "checkbox-checked" : "checkbox-unchecked"}
+        onClick={handleChange}>
             <p>{text}</p>
         </div>
     )

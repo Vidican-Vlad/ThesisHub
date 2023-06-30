@@ -5,6 +5,7 @@ import "../css/comment.css"
 import { Box, VStack } from "@chakra-ui/react";
 export const CommentSection = ({proposalID})=>{
     const textboxRef = useRef(null);
+    const commentListRef = useRef(null);
     const [commentList, setCommentList] = useState([]);
     const [isloading, setIsLoading] = useState(true);
 
@@ -27,7 +28,23 @@ export const CommentSection = ({proposalID})=>{
             console.log(err);
         }
     }
-
+    function handleChange(e){
+        if(e.keyCode === 13 ){
+            e.preventDefault();
+            if(e.shiftKey){
+                textboxRef.current.value += "\n";
+            }
+            else{
+                postComment();
+            }
+        }
+    }
+    useEffect(()=>{
+        const comments = commentList.current
+        if(comments){
+            commentListRef.scrollTop = commentListRef.scrollHeight;
+        }
+    }, [commentList]);
     useEffect(()=>{
         getData();
     }, []);
@@ -38,21 +55,15 @@ export const CommentSection = ({proposalID})=>{
         <>
         {!isloading &&
         <div className="Comment-section">
-            <div className="Comments">
+            <div className="Comments" ref={commentListRef}>
                 {
                     commentList.map(comment =>{
                         return <CommentItem key={comment._id} comment={comment}/>
                     })
                 }
-                {/* <VStack spacing={"2px"} align={"stretch"} height={"300px"}>
-                {
-                    
-                }
-                </VStack> */}
             </div>
             <div className="Add-comment">
-                <textarea ref={textboxRef} placeholder="insert your comment here..."></textarea>
-                <button onClick={postComment}>send</button>
+                <textarea id="message" name="message" placeholder= {"press <Shift> + <Enter> to send the message ..."} ref={textboxRef} onKeyDown={(e)=>{handleChange(e)}}></textarea>
             </div>
         </div>
         }

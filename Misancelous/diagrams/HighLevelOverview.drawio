@@ -1,0 +1,69 @@
+<mxfile host="app.diagrams.net" modified="2023-06-29T15:40:05.216Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="iSx2xPv3gSNYdQxL78jt" version="21.2.1" type="device">
+  <diagram name="Page-1" id="O5wQ2RHS7er6gBKy9kcs">
+    <mxGraphModel dx="1195" dy="637" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="PMfmADKkcs6CfoYOzFCT-1" value="ThesisHub" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="90" width="660" height="390" as="geometry" />
+        </mxCell>
+        <mxCell id="PMfmADKkcs6CfoYOzFCT-2" value="Baza de date MongoDB" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;" vertex="1" parent="PMfmADKkcs6CfoYOzFCT-1">
+          <mxGeometry x="540" y="60" width="110" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="PMfmADKkcs6CfoYOzFCT-9" value="Acceseaza informatii din &lt;br&gt;baza de date si le prelucreaza" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="PMfmADKkcs6CfoYOzFCT-1" target="PMfmADKkcs6CfoYOzFCT-2">
+          <mxGeometry x="0.125" y="40" relative="1" as="geometry">
+            <mxPoint x="380" y="110" as="sourcePoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PMfmADKkcs6CfoYOzFCT-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="PMfmADKkcs6CfoYOzFCT-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="140" as="sourcePoint" />
+            <mxPoint x="330" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PMfmADKkcs6CfoYOzFCT-17" value="trimite email-uri&lt;br&gt;catre utilizatorii" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="PMfmADKkcs6CfoYOzFCT-15">
+          <mxGeometry x="-0.1133" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PMfmADKkcs6CfoYOzFCT-8" value="redirectioneaza&amp;nbsp; cererile&lt;br&gt;pe rute de tip /api/ catre backend&lt;br&gt;(reverse proxy)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="PMfmADKkcs6CfoYOzFCT-1" source="PMfmADKkcs6CfoYOzFCT-4">
+          <mxGeometry x="0.1429" y="40" relative="1" as="geometry">
+            <mxPoint x="161" y="120" as="sourcePoint" />
+            <mxPoint x="280" y="110" as="targetPoint" />
+            <Array as="points" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PMfmADKkcs6CfoYOzFCT-10" value="proceseaza cereriile pentru fisere statice" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.26;entryY=-0.024;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="PMfmADKkcs6CfoYOzFCT-1" source="PMfmADKkcs6CfoYOzFCT-4" target="PMfmADKkcs6CfoYOzFCT-6">
+          <mxGeometry x="-0.3885" y="40" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="70" y="238" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PMfmADKkcs6CfoYOzFCT-4" value="Server HTTP" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="PMfmADKkcs6CfoYOzFCT-1">
+          <mxGeometry x="20" y="80" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PMfmADKkcs6CfoYOzFCT-6" value="Imagini, cod javascript, html si css&lt;br&gt;stochate local pe aceeasi masina&lt;br&gt;ca si serverul HTTP" style="shape=dataStorage;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="PMfmADKkcs6CfoYOzFCT-1">
+          <mxGeometry x="10" y="240" width="230" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="PMfmADKkcs6CfoYOzFCT-16" value="Server Express" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="PMfmADKkcs6CfoYOzFCT-1">
+          <mxGeometry x="270" y="80" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PMfmADKkcs6CfoYOzFCT-18" value="Server SMTP" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="PMfmADKkcs6CfoYOzFCT-1">
+          <mxGeometry x="270" y="240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PMfmADKkcs6CfoYOzFCT-20" value="Trimite cererii catre server" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="PMfmADKkcs6CfoYOzFCT-19" target="PMfmADKkcs6CfoYOzFCT-4">
+          <mxGeometry x="-0.1429" y="-20" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PMfmADKkcs6CfoYOzFCT-19" value="Utilizator" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="10" y="170" width="30" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,53 @@
+\babel@toc {romanian}{}\relax 
+\contentsline {chapter}{\numberline {1}Introducere}{4}{chapter.1}%
+\contentsline {chapter}{Introducere}{4}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Descrierea problemei}{4}{section.1.1}%
+\contentsline {chapter}{\numberline {2}Solutii Similare}{5}{chapter.2}%
+\contentsline {chapter}{Solutii similare}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Servicii de consultanta}{5}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Gradcoach}{5}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}ThesisHelpers}{5}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Compara\c tie}{5}{subsection.2.1.3}%
+\contentsline {section}{\numberline {2.2}Platforme de matchmaking}{6}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Fiverr}{6}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Freelancer}{6}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}MentorNet}{6}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Comparatie}{6}{subsection.2.2.4}%
+\contentsline {chapter}{\numberline {3}Arhitectura si facilitățile aplicației}{8}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Cazuri de utilizare pentru utilizatorii standard}{8}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Cazuri de utilizare pentru administratori}{9}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Design-ul bazei de date}{11}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Privire de ansamblu}{11}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Analiza colec\c tiilor din baza de date}{11}{subsection.3.3.2}%
+\contentsline {subsubsection}{User}{11}{section*.2}%
+\contentsline {subsubsection}{UserTemp}{11}{section*.3}%
+\contentsline {subsubsection}{Comment}{11}{section*.4}%
+\contentsline {subsubsection}{Tag}{12}{section*.5}%
+\contentsline {subsubsection}{Conversation}{12}{section*.6}%
+\contentsline {subsubsection}{Message}{12}{section*.7}%
+\contentsline {subsubsection}{File}{12}{section*.8}%
+\contentsline {subsubsection}{Proposal}{12}{section*.9}%
+\contentsline {chapter}{\numberline {4}Detalii de implementare}{13}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Tehnologiile alese}{13}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Frontend}{13}{subsection.4.1.1}%
+\contentsline {subsubsection}{Javascript}{13}{section*.10}%
+\contentsline {subsubsection}{React}{13}{section*.11}%
+\contentsline {subsubsection}{CSS}{14}{section*.12}%
+\contentsline {subsection}{\numberline {4.1.2}Backend}{14}{subsection.4.1.2}%
+\contentsline {subsubsection}{NodeJS}{14}{section*.13}%
+\contentsline {subsubsection}{Express}{15}{section*.14}%
+\contentsline {subsubsection}{MongoDB}{15}{section*.15}%
+\contentsline {subsubsection}{Mongoose}{16}{section*.16}%
+\contentsline {subsection}{\numberline {4.1.3}General}{16}{subsection.4.1.3}%
+\contentsline {subsubsection}{HTTP}{16}{section*.17}%
+\contentsline {subsubsection}{WebSockets}{17}{section*.18}%
+\contentsline {section}{\numberline {4.2}Manual de Implementare}{17}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Backend}{17}{subsection.4.2.1}%
+\contentsline {subsubsection}{Arhitectura sistemului}{17}{section*.19}%
+\contentsline {subsubsection}{fluxul de control}{18}{section*.20}%
+\contentsline {subsection}{\numberline {4.2.2}frontend}{22}{subsection.4.2.2}%
+\contentsline {subsubsection}{arhitectura sistemului}{22}{section*.21}%
+\contentsline {subsubsection}{Ierarhia componentelor}{24}{section*.22}%
+\contentsline {section}{\numberline {4.3}manual de utilizare}{26}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Concluzii si directii viitoare}{31}{chapter.5}%
+\contentsline {section}{\numberline {5.1}directii viitoare}{31}{section.5.1}%

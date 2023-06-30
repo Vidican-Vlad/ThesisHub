@@ -24,7 +24,7 @@ const io = new Server(httpServer, {
 	},
 	maxHttpBufferSize: 1e8 // 100 MB
   });
-// socketIoHandler(io);
+
 
 config();
 connectDB();
