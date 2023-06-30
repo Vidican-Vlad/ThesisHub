@@ -97,8 +97,9 @@ export function CreateProposalPage(){
             }
 
         }catch(err){
-            console.log(err);
-            alert("error, check console");
+            if(err?.response?.data?.msg){
+                alert(err.response.data.msg);
+            }
         }
     }
     function viewCategories(){

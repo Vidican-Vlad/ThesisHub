@@ -21,7 +21,7 @@ export const Message = ({message}) =>{
         <div className={message.sender._id === authUser ? "message message-own" : "message message-other" }>
             <div className="message-header">
                 <p>{message.sender.name}</p>
-                <p>{new Date(message.createdAt).toLocaleDateString("ro-RO", { day: "numeric", month: "long", year: "numeric"})}</p>
+                <p>{new Date(message.createdAt).toLocaleDateString("ro-RO", { day: "numeric", month: "numeric", year: "numeric"})} {new Date(message.createdAt).toLocaleTimeString("ro-RO")}</p>
             </div>
             <Divider/>
             <div className="nessage-content">

@@ -25,7 +25,6 @@ async function validateRegister(req, res, next) {
             throw new customError("an account with registered with this email address already exists, please try again", 400);
         }
         const existingRegisterRequest = await userTmp.findOne({email: email.trim().toLowerCase()});
-        // console.log(existingRegisterRequest);
         if(existingRegisterRequest?.validated){
             return res.status(201).json({msg:"your registration request was confirmed and it will be reviewed by one of our admins shortly, we will notify you via email when the onboarding process is complete"});
         }

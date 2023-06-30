@@ -9,7 +9,6 @@ import { validateString } from "./validateString.js"
 
 async function validateCreateProposal(req, res, next){
     try {
-        console.log(req.body);
         if(typeof req.body.tags === "string"){
             req.body.tags = req.body.tags.split(",");
         }

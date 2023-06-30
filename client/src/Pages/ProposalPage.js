@@ -14,7 +14,7 @@ import "../App.css"
 
 
 export function ProposalPage(){
-    //
+
     const  { proposalID } = useParams();
     const [proposal, setProposal] = useState({});
     const [loading, setLoading] = useState(true);
@@ -30,10 +30,6 @@ export function ProposalPage(){
     useEffect(()=>{
       getData();
     }, [])
-
-    useEffect(()=>{
-        console.log(proposal);
-    }, [proposal]);
     function updateProposalApplications(application){
         setProposal((prevProposal) => {
            return {
@@ -61,7 +57,9 @@ export function ProposalPage(){
                 <Navbar/>
                 <VStack>
                     <div className="proposal-page-main-main">
-                        {!loading && <ProposalItem proposalData={proposal} updateProposalApplications = {updateProposalApplications} updateProposalApproved = {updateProposalApproved}/>}
+                        {!loading && <ProposalItem proposalData={proposal} 
+                         updateProposalApplications = {updateProposalApplications} 
+                         updateProposalApproved = {updateProposalApproved}/>}
                         <CommentSection proposalID={proposalID}/>
                     </div>
                </VStack>

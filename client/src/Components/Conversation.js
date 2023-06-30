@@ -1,11 +1,7 @@
-
-
-
 function determineUsertoShow(conversation, currentUser){
     
     return (conversation.user1._id === currentUser) ? conversation.user2 : conversation.user1;
 }
-
 
 
 export const Conversation = ({Conversation, selectedConversation, onChange, currentUser}) =>{

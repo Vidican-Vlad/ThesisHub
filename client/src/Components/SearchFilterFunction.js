@@ -49,7 +49,6 @@ export function SearchFilterFunction({searchForProposals, drawerOpen, drawerClos
     async function handleModalOpen(){
         if(isEmptyArray(categories)){
             let temp = await getTagsGroupedByCategory();
-            console.log(temp);
             setCategories(temp);
         }
         onOpen();

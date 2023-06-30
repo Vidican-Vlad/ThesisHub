@@ -40,9 +40,6 @@ export function MessagesPage(){
     function resetSuggestedUsers(){
         setSuggestedUsers([]);
     }
-    useEffect(()=>{
-        console.log(files);
-    },[files]);
     const handleFileChange = (e) => {
         const selectedFiles = Array.from(e.target.files);
         setFiles(selectedFiles);
@@ -77,7 +74,7 @@ export function MessagesPage(){
             attachements: attachements
         }
         socket.emit("send_message", payload);
-        messageBox.current.value = "";
+        messageBox.current.value = null;
         filePicker.current.value = null;
         setFiles([]);
     }
@@ -134,19 +131,11 @@ export function MessagesPage(){
                 console.log(err);
             }
     }
-
     function handleTextInput(text){
         generateSuggestions(text);
     }
-
     useEffect(()=>{
-    //    const tempSocket = io("http://localhost:3055/", {
-    //         autoConnect: false,
-    //         auth: {
-    //             token: localStorage.getItem("token")
-    //         },
-    //     });
-        //setSocket(tempSocket);
+
         getConversationsfromDB();
     },[]);
 

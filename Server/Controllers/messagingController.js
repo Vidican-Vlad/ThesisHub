@@ -99,7 +99,6 @@ async function getUserSugestions(input){
 
 async function createMessage(input, userID){
     try {
-        console.log(input);
         let fileIDs;
         if(Array.isArray(input.attachements) && input.attachements.length > 0){
             let files = input.attachements.map((el) =>file.create(el));
@@ -107,7 +106,6 @@ async function createMessage(input, userID){
         }else{
             fileIDs = [];
         }
-        console.log(fileIDs)
         let message = await Message.create({
             content: input.content,
             sender: userID,
